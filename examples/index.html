@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+<div id="wizard"></div>
+
+<script src="../src/js/wand.js"></script>
+<script>
+
+var options = {
+  elem: "wizard",
+  nodes: [
+    {
+        "id":0,
+        "title": "Some Title",
+        "content": "Do you want a thing or another thing?",
+        "type": "pickOne",
+        "triggers": [
+        {
+          "content":"A thing",
+          "target":1
+        },
+        {
+          "content":"Another thing",
+          "target":"FART"
+        }
+      ]
+    },
+    {
+        "id":1,
+        "title": "Another Title",
+        "content": "You are on another page.",
+        "type": "pickOne",
+        "triggers": []
+    },
+    {
+        "id":"FART",
+        "title": "Third Title",
+        "content": "You are on yet another third page again.",
+        "type": "pickOne",
+        "triggers": []
+    }
+]};
+
+var app = new Wand(options);
+
+</script>
+
+</body>
+</html>

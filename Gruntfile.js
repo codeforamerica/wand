@@ -51,7 +51,14 @@ module.exports = function(grunt) {
 
     watch: {
       js: {
-
+        files: ['<%=srcDir%>/**/*.js'],
+        tasks: [
+          'clean:dist',
+          'copy'
+        ],
+        options: {
+          spawn: false
+        }
       }
     },
 
@@ -77,6 +84,6 @@ module.exports = function(grunt) {
     'clean:dist',
     'copy',
     'connect:development',
-    'watch'
+    'watch',
   ]);
 };
