@@ -63,12 +63,10 @@ module.exports = function(grunt) {
     },
 
     connect: {
-      options: {
-        port: 4000
-      },
       development: {
         options: {
-          keepalive: true,
+          base: './',
+          port: 4000
         }
       }
     }
