@@ -59,6 +59,13 @@ module.exports = function(grunt) {
         options: {
           spawn: false
         }
+      },
+      gruntfile: {
+        files: ['Gruntfile.js'],
+        tasks: [
+          'clean:dist',
+          'copy'
+        ]
       }
     },
 
