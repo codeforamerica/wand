@@ -29,3 +29,14 @@ The wand engine takes a wand specification and turns it into a page.
 #### The editor
 
 The wand editor loads in a specification and allows a non-technical end-user to edit the details of that page.
+
+## Installation & Contributing
+
+Currently, Wand is constructed using [Grunt](http://gruntjs.com/), which relies on [`npm`](https://www.npmjs.com/). To install it on your computer, follow these steps:
+
+1. Fork the project with your own account
+2. Clone the fork on your computer `git clone git@github.com:USERNAME/wand.git`
+3. Install the dependencies `npm install`
+4. Install the Grunt command line tools `npm install -g grunt-cli` (might require `sudo`)
+5. Run the `grunt` command to build the javascript from `src`. This will also load a server at `localhost:4000`. To view the working example, visit `localhost:4000/examples/`.
+6. Make changes, then submit a pull request to this repository!
