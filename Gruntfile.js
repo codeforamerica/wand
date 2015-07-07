@@ -1,7 +1,7 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt, {
     pattern: ['grunt-contrib-*', 'grunt-*']
-  });
+  })
 
   grunt.initConfig({
     buildDir: 'dist',
@@ -24,12 +24,26 @@ module.exports = function(grunt) {
       }
     },
 
-    standard: {
+    karma: {
       options: {
-        format: true
+        files: [
+          '<%=srcJs%>',
+          'test/**/*.spec.js'
+        ],
+        basePath: '.',
+        colors: true,
+        frameworks: ['mocha', 'chai'],
+        plugins: [
+          'karma-chai',
+          'karma-mocha',
+          'karma-phantomjs-launcher',
+          'karma-spec-reporter'
+        ],
+        browsers: ['PhantomJS']
       },
-      app: {
-        src: ['<%=srcJs%>']
+      single: {
+        singleRun: true,
+        reporters: ['spec']
       }
     },
 
@@ -45,8 +59,7 @@ module.exports = function(grunt) {
         newcap: true,
         noarg: true,
         sub: true,
-        trailing: true,
-        asi: true
+        trailing: true
       }
     },
 
@@ -61,7 +74,7 @@ module.exports = function(grunt) {
 
     watch: {
       js: {
-        files: ['<%=srcDir%>/**/*.js'],
+        files: ['<%=srcDir%>/**/*.spec.js'],
         tasks: [
           'clean:dist',
           'copy'
@@ -87,24 +100,23 @@ module.exports = function(grunt) {
         }
       }
     }
-  });
+  })
 
   grunt.registerTask('build', [
     'clean:dist',
     'jshint',
-    'standard',
     'uglify:build'
-  ]);
+  ])
 
   grunt.registerTask('test', [
     'jshint',
-    'standard'
-  ]);
+    'karma:single'
+  ])
 
   grunt.registerTask('default', [
     'clean:dist',
     'copy',
     'connect:development',
-    'watch',
-  ]);
-};
+    'watch'
+  ])
+}
