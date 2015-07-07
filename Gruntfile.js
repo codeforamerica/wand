@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt, {
-    pattern: ['grunt-contrib-*']
+    pattern: ['grunt-contrib-*', 'grunt-*']
   });
 
   grunt.initConfig({
@@ -24,6 +24,15 @@ module.exports = function(grunt) {
       }
     },
 
+    standard: {
+      options: {
+        format: true
+      },
+      app: {
+        src: ['<%=srcJs%>']
+      }
+    },
+
     jshint: {
       files: ['<%=srcJs%>'],
       options: {
@@ -37,6 +46,7 @@ module.exports = function(grunt) {
         noarg: true,
         sub: true,
         trailing: true,
+        asi: true
       }
     },
 
@@ -82,7 +92,13 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'jshint',
+    'standard',
     'uglify:build'
+  ]);
+
+  grunt.registerTask('test', [
+    'jshint',
+    'standard'
   ]);
 
   grunt.registerTask('default', [
