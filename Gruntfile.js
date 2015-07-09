@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt, {
     pattern: ['grunt-contrib-*', 'grunt-*']
-  })
+  });
 
   grunt.initConfig({
     buildDir: 'dist',
@@ -48,7 +48,7 @@ module.exports = function (grunt) {
     },
 
     jshint: {
-      files: ['<%=srcJs%>'],
+      files: ['<%=srcJs%>', 'Gruntfile.js'],
       options: {
         curly: true,
         devel: true,
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 
     watch: {
       js: {
-        files: ['<%=srcDir%>/**/*.spec.js'],
+        files: ['<%=srcDir%>/**/*.js'],
         tasks: [
           'clean:dist',
           'copy'
@@ -100,23 +100,23 @@ module.exports = function (grunt) {
         }
       }
     }
-  })
+  });
 
   grunt.registerTask('build', [
     'clean:dist',
     'jshint',
     'uglify:build'
-  ])
+  ]);
 
   grunt.registerTask('test', [
     'jshint',
     'karma:single'
-  ])
+  ]);
 
   grunt.registerTask('default', [
     'clean:dist',
     'copy',
     'connect:development',
     'watch'
-  ])
-}
+  ]);
+};
