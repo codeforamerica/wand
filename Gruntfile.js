@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 
     watch: {
       js: {
-        files: ['<%=srcDir%>/**/*.spec.js'],
+        files: ['<%=srcDir%>/**/*.js'],
         tasks: [
           'clean:dist',
           'copy'

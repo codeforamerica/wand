@@ -1,7 +1,9 @@
 (function() {
   Wand = function(options) {
     // @params options - object that contains nodes and html container id
+    
     this.options = options || {} ;// {} if no options, empty object
+
     if (!options.elem || !document.getElementById(options.elem)) {
       throw badHtmlError;
     }
@@ -10,12 +12,14 @@
     this.elem = document.getElementById(options.elem);
     this.elem.className += ' wand';
 
-    renderNode(0);
+	
+    this.renderNode(0);	
+    
   };
 
   var badHtmlError = new Error('You did not pass a valid HTML Element');
 
-  function getNode(nodeId) {
+  Wand.prototype.getNode = function(nodeId) {
     for (var i = this.nodes.length - 1; i >= 0; i--) {
       if (this.nodes[i].id === nodeId) {
         return this.nodes[i];
@@ -25,8 +29,9 @@
     return;
   }
 
-  function renderNode(nodeId) {
-    var node = getNode(nodeId);
+  Wand.prototype.renderNode = function(nodeId) {
+	console.log(this)
+    var node = this.getNode(nodeId);
     if (!node) { throw new Error('redundant unfound node error'); }
     // puts stuff into a template
     this.elem.innerHTML = '<h1>' + node.title + '</h1>';
@@ -38,7 +43,7 @@
     }
   }
 
-  function renderTrigger(trigger) {
+  Wand.prototype.renderTrigger = function(trigger) {
     var button = document.createElement('button');
     button.innerHTML = trigger.content;
     var self = this;
