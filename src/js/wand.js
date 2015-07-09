@@ -12,8 +12,14 @@
     this.elem = document.getElementById(options.elem);
     this.elem.className += ' wand';
 
+	this.header = document.createElement('header');
+	this.body = document.createElement('section');
+	this.body.className = 'wizard-body';
 	
-    this.renderNode(0);	
+	this.elem.appendChild(this.header);
+	this.elem.appendChild(this.body);
+    //this.renderNode(0);	
+    
     
   };
 
@@ -34,6 +40,7 @@
     var node = this.getNode(nodeId);
     if (!node) { throw new Error('redundant unfound node error'); }
     // puts stuff into a template
+    
     this.elem.innerHTML = '<h1>' + node.title + '</h1>';
     this.elem.innerHTML += '<div class="node-contents">' + node.content + '</div>';
     if (node.triggers) {
