@@ -33,7 +33,7 @@
     this.elem.innerHTML += '<div class="node-contents">' + node.content + '</div>';
     if (node.triggers) {
       for (var i = node.triggers.length - 1; i >= 0; i--) {
-        this.renderTrigger(node.triggers[i]);
+        renderTrigger(node.triggers[i]);
       }
     }
   }
@@ -41,9 +41,8 @@
   function renderTrigger(trigger) {
     var button = document.createElement('button');
     button.innerHTML = trigger.content;
-    var self = this;
     button.onclick = function (event) {
-      self.renderNode(trigger.target);
+      renderNode(trigger.target);
     };
 
     this.elem.appendChild(button);
