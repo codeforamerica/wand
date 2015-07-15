@@ -14,21 +14,22 @@ describe('Wand', function () {
   });
 
   it('should fail without any options', function () {
-    expect(function(){ wand(); } ).to.throw(Error);
+    expect(function(){ wand.init(); } ).to.throw(Error);
   });
 
 
   it('should fail without an html element', function () {
-    expect(function(){ wand({elem: null}); } ).to.throw(Error);
+    expect(function(){ wand.init({elem: null}); } ).to.throw(Error);
   });
 
   it('should fail with a bad html element', function () {
     // test that we pass successfully
-    expect(function(){ wand({elem: 'NOELEMENTHERE'}); } ).to.throw(Error);
+    expect(function(){ wand.init({elem: 'NOELEMENTHERE'}); } ).to.throw(Error);
   });
 
   it('should successfully initialize with a valid options', function () {
-    wand(opts);
+    wand.init(opts);
   });
+
 
 });

@@ -19,7 +19,7 @@ var Wand = (function() {
     elem = document.getElementById(opts.elem);
     elem.className += ' wand';
 
-    wand.renderNode(0);
+    renderNode(0);
   };
 
   function getNode(nodeId) {
@@ -32,7 +32,7 @@ var Wand = (function() {
     return;
   }
 
-  wand.renderNode = function(nodeId) {
+  function renderNode(nodeId) {
     var node = getNode(nodeId);
     if (!node) { throw new Error('redundant unfound node error'); }
     // puts stuff into a template
@@ -43,13 +43,13 @@ var Wand = (function() {
         renderTrigger(node.triggers[i]);
       }
     }
-  };
+  }
 
   function renderTrigger(trigger) {
     var button = document.createElement('button');
     button.innerHTML = trigger.content;
     button.onclick = function (event) {
-      wand.renderNode(trigger.target);
+      renderNode(trigger.target);
     };
 
     elem.appendChild(button);
