@@ -38,11 +38,27 @@ var Wand = (function() {
     // puts stuff into a template
     elem.innerHTML = '<h1>' + node.title + '</h1>';
     elem.innerHTML += '<div class="node-contents">' + node.content + '</div>';
-    if (node.triggers) {
-      for (var i = node.triggers.length - 1; i >= 0; i--) {
-        renderTrigger(node.triggers[i]);
-      }
+
+    // Check the node type and if it's custom do something that's black magic?
+    switch(node.type) {
+      case 'custom':
+          if (node.triggers) {
+            renderCustomTrigger(node.triggers);
+          }
+        break;
+      default:
+        if (node.triggers) {
+          for (var i = node.triggers.length - 1; i >= 0; i--) {
+            renderTrigger(node.triggers[i]);
+          }
+        }
     }
+  }
+
+  function renderCustomTrigger(trigger) {
+    console.log('CUSTOM TRIGGER THAT IS STILL WITCH CRAFT. NEED TO ADD TEST CASES FOR SAID WITCHCRAFT.');
+    var textbox = document.createElement('input');
+    elem.appendChild(textbox);
   }
 
   function renderTrigger(trigger) {
