@@ -38,7 +38,7 @@ Currently, Wand is constructed using [Grunt](http://gruntjs.com/), which relies 
 2. Clone the fork on your computer `git clone git@github.com:USERNAME/wand.git`
 3. Install the dependencies `npm install`
 4. Install the Grunt command line tools `npm install -g grunt-cli` (might require `sudo`)
-5. Run the `grunt` command to build the javascript from `src`. This will also load a server at `localhost:4000`. To view the working example, visit `localhost:4000/examples/`.
+5. Run `npm start` command to build the javascript from `src`. This will also load a server at `localhost:4000`. To view the working example, visit `localhost:4000/examples/`.
 6. Make changes, then submit a pull request to this repository!
 
 ## Testing
