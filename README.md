@@ -32,7 +32,14 @@ The wand editor loads in a specification and allows a non-technical end-user to 
 
 ## Installation & Contributing
 
-Currently, Wand is constructed using [Grunt](http://gruntjs.com/), which relies on [`npm`](https://www.npmjs.com/). To install it on your computer, follow these steps:
+Currently, Wand is constructed using [Grunt](http://gruntjs.com/), which relies on [`npm`](https://www.npmjs.com/). For custom styles, Wand uses the Ruby Sass compiler. To install it on your computer, follow these steps:
+
+#### Ruby/Sass
+
+1. Make sure that you have ruby installed. For help, see this [how-to guide](https://github.com/codeforamerica/howto/blob/master/Ruby.md)
+2. Install the proper ruby gem: `gem install sass`
+
+#### Everything else
 
 1. Fork the project with your own account
 2. Clone the fork on your computer `git clone git@github.com:USERNAME/wand.git`

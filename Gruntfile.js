@@ -7,7 +7,8 @@ module.exports = function (grunt) {
     buildDir: 'dist',
     srcDir: 'src',
     srcJs: '<%=srcDir%>/js/**/*.js',
-
+    srcSass: '<%=srcDir%>/sass/**/*.scss',
+    
     clean: {
       dist: {
         files: [{
@@ -23,7 +24,19 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    
+    sass: {                              // Task
+      dist: {                            // Target
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['<%=srcSass%>'],
+          dest: '<%=buildDir%>',
+          ext: '.css'
+        }]
+      }
+    },
+    
     karma: {
       options: {
         files: [
@@ -74,10 +87,21 @@ module.exports = function (grunt) {
 
     watch: {
       js: {
-        files: ['<%=srcDir%>/**/*.js'],
+        files: ['<%=srcJs%>'],
         tasks: [
           'clean:dist',
           'copy'
+        ],
+        options: {
+          spawn: false
+        }
+      },
+      sass: {
+        files: ['<%=srcSass%>'],
+        tasks: [
+          'clean:dist',
+          'copy',
+          'sass'
         ],
         options: {
           spawn: false
@@ -116,6 +140,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'clean:dist',
     'copy',
+    'sass',
     'connect:development',
     'watch'
   ]);
