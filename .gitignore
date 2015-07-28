@@ -31,3 +31,6 @@ node_modules
 
 # ignore the dist output
 dist
+
+# ignore the sass cache
+.sass-cache
