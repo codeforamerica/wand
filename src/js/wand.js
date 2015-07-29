@@ -7,7 +7,6 @@ var Wand = (function() {
 
   var badHtmlError = new Error('You did not pass a valid HTML Element');
 
-
   wand.init = function(opts) {
     // @params options - object that contains nodes and html container id
     options = opts || {}; // {} if no options, empty object
@@ -26,8 +25,11 @@ var Wand = (function() {
     _firstNode = wand.state.init();
     renderNode(_firstNode);
 
-  };
+    window.onpopstate = function(event) {
+      renderNode(wand.state.previousNode());
+    };
 
+  };
 
   function getNode(nodeId) {
     for (var i = nodes.length - 1; i >= 0; i--) {

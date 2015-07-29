@@ -26,6 +26,15 @@ describe('Wand History', function() {
     window.history.pushState(null, null, '/');
   });
 
+  it('should check for wandState queryString and set history appropriately', function() {
+    window.history.pushState(
+      [0,1], "", addUrlParam(document.location.search, "wandState", [0,1])
+    );
+    wand = Wand;
+    wand.init(opts);
+    expect(Wand.state.getState()).to.deep.equal([0, 1]);
+  });
+
   describe('From starting node', function() {
 
     beforeEach(function() {
@@ -51,17 +60,18 @@ describe('Wand History', function() {
       expect(getParameterByName("wandState")).to.equal("0,1");
     });
 
-  });
+    it('should navigate back properly', function(done) {
+      document.getElementById(elemId).getElementsByTagName("button")[0].click();
+      // setTimeout from http://cgrune.com/2013/10/25/testing-window-history/
+      setTimeout(function() {
+        window.history.back();
+      }, 10);
+      done();
+      expect(getParameterByName("wandState")).to.equal("0");
+      expect(Wand.state.getState()).to.deep.equal([0]);
+    });
 
-  it('should check for wandState queryString and set history appropriately', function() {
-    window.history.pushState(
-      [0,1], "", addUrlParam(document.location.search, "wandState", [0,1])
-    );
-    wand = Wand;
-    wand.init(opts);
-    expect(Wand.state.getState()).to.deep.equal([0, 1]);
   });
-
   var addUrlParam = function(search, key, val) {
     var newParam = key + '=' + val,
       params = '?' + newParam;

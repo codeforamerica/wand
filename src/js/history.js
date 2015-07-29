@@ -8,22 +8,30 @@ var WandState = (function() {
 
   state.init = function() {
     resetState();
-    _loadState = decodeState(getParameterByName('wandState'));
-    if (_loadState === '') {
-      return Wand.opts.nodes[0].id;
-    }
-    _state = _loadState;
-    return state.getCurrentNode();
+    return getStateFromUrl();
+  };
+
+  state.previousNode = function() {
+    return getStateFromUrl();
   };
 
   state.addToState = function(nodeId) {
     if (nodeId !== state.getCurrentNode()) {
       _state.push(nodeId);
       history.pushState(
-        state.getState(), "", addUrlParam(document.location.search, "wandState", encodeState(state.getState()))
+        state.getState(), '', addUrlParam(document.location.search, "wandState", encodeState(state.getState()))
       );
     }
   };
+
+  function getStateFromUrl() {
+    _loadState = decodeState(getParameterByName('wandState'));
+    if (_loadState === '') {
+      return Wand.opts.nodes[0].id;
+    }
+    _state = _loadState;
+    return state.getCurrentNode();
+  }
 
   function resetState() {
     _state = [];
