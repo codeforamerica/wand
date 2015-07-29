@@ -2,24 +2,26 @@ var Wand = (function() {
 
   var wand = {};
 
-  var options = {},
-      nodes = [],
-      elem = null;
+  var options, nodes, elem;
+  wand.engine = WandEngine;
 
   var badHtmlError = new Error('You did not pass a valid HTML Element');
 
   wand.init = function(opts) {
     // @params options - object that contains nodes and html container id
-    options = opts || {} ;// {} if no options, empty object
+    options = opts || {};// {} if no options, empty object
     if (!opts.elem || !document.getElementById(opts.elem)) {
       throw badHtmlError;
     }
+
+    wand.opts = opts;
 
     nodes = opts.nodes;
     elem = document.getElementById(opts.elem);
     elem.className += ' wand';
 
     renderNode(0);
+
   };
 
   function getNode(nodeId) {
@@ -57,4 +59,4 @@ var Wand = (function() {
 
   return wand;
 
-}());
+}(Wand || {}));

@@ -8,7 +8,7 @@ module.exports = function (grunt) {
     srcDir: 'src',
     srcJs: '<%=srcDir%>/js/**/*.js',
     srcSass: '<%=srcDir%>/sass/**/*.scss',
-    
+
     clean: {
       dist: {
         files: [{
@@ -24,7 +24,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    
+
     sass: {                              // Task
       dist: {                            // Target
         files: [{
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         }]
       }
     },
-    
+
     karma: {
       options: {
         files: [
@@ -76,12 +76,13 @@ module.exports = function (grunt) {
       }
     },
 
-    copy: {
-      js: {
-        expand: true,
-        flatten: true,
+    concat: {
+      options: {
+        separator: ';'
+      },
+      dist: {
         src: ['<%=srcJs%>'],
-        dest: '<%=buildDir%>'
+        dest: '<%=buildDir%>/wand.js'
       }
     },
 
@@ -90,7 +91,7 @@ module.exports = function (grunt) {
         files: ['<%=srcJs%>'],
         tasks: [
           'clean:dist',
-          'copy'
+          'concat'
         ],
         options: {
           spawn: false
@@ -100,7 +101,7 @@ module.exports = function (grunt) {
         files: ['<%=srcSass%>'],
         tasks: [
           'clean:dist',
-          'copy',
+          'concat',
           'sass'
         ],
         options: {
@@ -111,7 +112,7 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js'],
         tasks: [
           'clean:dist',
-          'copy'
+          'concat'
         ]
       }
     },
@@ -139,7 +140,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'clean:dist',
-    'copy',
+    'concat',
     'sass',
     'connect:development',
     'watch'

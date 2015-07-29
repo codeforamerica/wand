@@ -1,0 +1,3 @@
+var WandEngine = (function () {
+
+}(WandEngine || {}));
