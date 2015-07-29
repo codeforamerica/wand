@@ -3,7 +3,7 @@ describe('Wand', function () {
   var _elem, wand;
   var expect = chai.expect;
   var elemId = 'testDiv';
-  var nodes = [{"id": 0}];
+  var nodes = [{"id": 0, 'title':"node 0 title"}];
   var opts = {elem: elemId, nodes: nodes};
 
   beforeEach(function () {
@@ -30,6 +30,5 @@ describe('Wand', function () {
   it('should successfully initialize with a valid options', function () {
     wand.init(opts);
   });
-
 
 });
