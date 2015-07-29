@@ -17,7 +17,7 @@ describe('Wand plugin', function () {
 
     var wandWithPlugin = (function (wand) {
       wand.newPluginFunction = function() {
-        called = true
+        called = true;
       };
       return wand;
     }(Wand));

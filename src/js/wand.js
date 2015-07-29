@@ -1,25 +1,33 @@
-var Wand = (function() {
+var Wand = (function(wand) {
 
-  var wand = {};
+  'use strict';
 
-  var options = {},
-      nodes = [],
-      elem = null;
+  wand = wand || {};
+
+  var options, nodes, elem;
 
   var badHtmlError = new Error('You did not pass a valid HTML Element');
 
   wand.init = function(opts) {
     // @params options - object that contains nodes and html container id
-    options = opts || {} ;// {} if no options, empty object
+    options = opts || {}; // {} if no options, empty object
     if (!opts.elem || !document.getElementById(opts.elem)) {
       throw badHtmlError;
     }
+
+    wand.opts = opts;
 
     nodes = opts.nodes;
     elem = document.getElementById(opts.elem);
     elem.className += ' wand';
 
-    renderNode(0);
+    var _firstNode = wand.state.init();
+    renderNode(_firstNode);
+
+    window.onpopstate = function(event) {
+      renderNode(wand.state.previousNode());
+    };
+
   };
 
   function getNode(nodeId) {
@@ -34,7 +42,11 @@ var Wand = (function() {
 
   function renderNode(nodeId) {
     var node = getNode(nodeId);
-    if (!node) { throw new Error('redundant unfound node error'); }
+    if (!node) {
+      throw new Error('redundant unfound node error');
+    }
+    // push node into State array
+    wand.state.addToState(nodeId);
     // puts stuff into a template
     elem.innerHTML = '<h1>' + node.title + '</h1>';
     elem.innerHTML += '<div class="node-contents">' + node.content + '</div>';
@@ -48,7 +60,7 @@ var Wand = (function() {
   function renderTrigger(trigger) {
     var button = document.createElement('button');
     button.innerHTML = trigger.content;
-    button.onclick = function (event) {
+    button.onclick = function(event) {
       renderNode(trigger.target);
     };
 
@@ -57,4 +69,4 @@ var Wand = (function() {
 
   return wand;
 
-}());
+}(Wand || {}));
