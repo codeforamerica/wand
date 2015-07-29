@@ -8,6 +8,7 @@ module.exports = function (grunt) {
     srcDir: 'src',
     srcJs: '<%=srcDir%>/js/**/*.js',
     srcSass: '<%=srcDir%>/sass/**/*.scss',
+    handlebars: 'node_modules/handlebars/dist',
 
     clean: {
       dist: {
@@ -40,6 +41,8 @@ module.exports = function (grunt) {
     karma: {
       options: {
         files: [
+          '<%=handlebars%>/handlebars.js',
+          '<%=handlebars%>/handlebars.runtime.js',
           '<%=srcJs%>',
           'test/**/*.spec.js'
         ],
@@ -80,10 +83,14 @@ module.exports = function (grunt) {
       options: {
         separator: ';'
       },
-      dist: {
-        src: ['<%=srcJs%>'],
+      dev: {
+        src: [
+          '<%=handlebars%>/handlebars.js',
+          '<%=handlebars%>/handlebars.runtime.js',
+          '<%=srcJs%>'
+        ],
         dest: '<%=buildDir%>/wand.js'
-      }
+      },
     },
 
     watch: {
@@ -91,7 +98,7 @@ module.exports = function (grunt) {
         files: ['<%=srcJs%>'],
         tasks: [
           'clean:dist',
-          'concat'
+          'concat:dev'
         ],
         options: {
           spawn: false
@@ -101,7 +108,7 @@ module.exports = function (grunt) {
         files: ['<%=srcSass%>'],
         tasks: [
           'clean:dist',
-          'concat',
+          'concat:dev',
           'sass'
         ],
         options: {
@@ -112,7 +119,7 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js'],
         tasks: [
           'clean:dist',
-          'concat'
+          'concat:dev'
         ]
       }
     },
@@ -140,7 +147,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'clean:dist',
-    'concat',
+    'concat:dev',
     'sass',
     'connect:development',
     'watch'
