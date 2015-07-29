@@ -1,4 +1,4 @@
-describe('Wand History', function() {
+describe('Wand State', function() {
 
   var _elem, wand;
   var expect = chai.expect;
@@ -6,13 +6,10 @@ describe('Wand History', function() {
   var opts = {
     elem: elemId,
     nodes: [{
-      "id": 0,
-      "triggers": [{
-        "target": 1
-      }]
+      "id": 0, "title": "First Node", "type": "pickOne",
+      "triggers": [{ "target": 1, "content": "test" }]
     }, {
-      "id": 1,
-      "title": "Second Node"
+      "id": 1, "title": "Second Node", "type": "pickOne"
     }]
   };
 

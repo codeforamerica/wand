@@ -26,14 +26,14 @@ var Wand = (function(wand, Handlebars) {
     wand.elem.innerHTML = Handlebars.compile(wand.template.node)(node);
     if (node.triggers) {
       for (var i = node.triggers.length - 1; i >= 0; i--) {
-        renderTrigger(node.triggers[i]);
+        renderTrigger(node.triggers[i], node.type);
       }
     }
   };
 
-  function renderTrigger(trigger) {
+  function renderTrigger(trigger, type) {
     var button = document.createElement('button');
-    button.innerHTML = Handlebars.compile(wand.template.button)(trigger);
+    button.innerHTML = Handlebars.compile(wand.template.triggers[type])(trigger);
     button.onclick = function(event) {
       wand.engine.renderNode(trigger.target);
     };

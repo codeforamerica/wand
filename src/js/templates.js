@@ -9,7 +9,11 @@ var Wand = (function(wand) {
   wand.template.node = '<h1>{{title}}</h1>' +
     '<div class="node-contents">{{content}}</div>';
 
-  wand.template.button = '{{content}}';
+  wand.template.triggers = {
+
+    'pickOne': '{{content}}'
+
+  };
 
   return wand;
 }(Wand || {}));
