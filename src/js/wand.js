@@ -1,9 +1,10 @@
-var Wand = (function() {
+var Wand = (function(wand) {
 
-  var wand = {};
+  'use strict';
+
+  wand = wand || {};
 
   var options, nodes, elem;
-  wand.state = WandState;
 
   var badHtmlError = new Error('You did not pass a valid HTML Element');
 
@@ -20,9 +21,7 @@ var Wand = (function() {
     elem = document.getElementById(opts.elem);
     elem.className += ' wand';
 
-    wand.state = WandState;
-
-    _firstNode = wand.state.init();
+    var _firstNode = wand.state.init();
     renderNode(_firstNode);
 
     window.onpopstate = function(event) {

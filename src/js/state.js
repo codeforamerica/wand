@@ -1,36 +1,40 @@
-var WandState = (function() {
+var Wand = (function(wand) {
 
-  var state = {};
+  'use strict';
+
+  wand = wand || {};
+
+  wand.state = {};
   var _state = [];
 
-  state.getState = function() { return _state; };
-  state.getCurrentNode = function() { return _state[_state.length - 1]; };
+  wand.state.getState = function() { return _state; };
+  wand.state.getCurrentNode = function() { return _state[_state.length - 1]; };
 
-  state.init = function() {
+  wand.state.init = function() {
     resetState();
     return getStateFromUrl();
   };
 
-  state.previousNode = function() {
+  wand.state.previousNode = function() {
     return getStateFromUrl();
   };
 
-  state.addToState = function(nodeId) {
-    if (nodeId !== state.getCurrentNode()) {
+  wand.state.addToState = function(nodeId) {
+    if (nodeId !== wand.state.getCurrentNode()) {
       _state.push(nodeId);
       history.pushState(
-        state.getState(), '', addUrlParam(document.location.search, "wandState", encodeState(state.getState()))
+        wand.state.getState(), '', addUrlParam(document.location.search, "wandState", encodeState(wand.state.getState()))
       );
     }
   };
 
   function getStateFromUrl() {
-    _loadState = decodeState(getParameterByName('wandState'));
+    var _loadState = decodeState(getParameterByName('wandState'));
     if (_loadState === '') {
       return Wand.opts.nodes[0].id;
     }
     _state = _loadState;
-    return state.getCurrentNode();
+    return wand.state.getCurrentNode();
   }
 
   function resetState() {
@@ -83,6 +87,6 @@ var WandState = (function() {
 
   }
 
-  return state;
+  return wand;
 
-}(WandState || {}));
+}(Wand || {}));
