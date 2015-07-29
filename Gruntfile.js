@@ -41,8 +41,8 @@ module.exports = function (grunt) {
     karma: {
       options: {
         files: [
-          '<%=handlebars%>/handlebars.js',
           '<%=handlebars%>/handlebars.runtime.js',
+          '<%=handlebars%>/handlebars.js',
           '<%=srcJs%>',
           'test/**/*.spec.js'
         ],
@@ -85,8 +85,8 @@ module.exports = function (grunt) {
       },
       dev: {
         src: [
-          '<%=handlebars%>/handlebars.js',
           '<%=handlebars%>/handlebars.runtime.js',
+          '<%=handlebars%>/handlebars.js',
           '<%=srcJs%>'
         ],
         dest: '<%=buildDir%>/wand.js'
