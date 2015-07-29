@@ -8,7 +8,7 @@ describe('Wand', function () {
 
   beforeEach(function () {
     var _elem = document.createElement('div');
-    _elem.setAttribute('id', elemId);
+    _elem.id = elemId;
     document.body.appendChild(_elem);
     wand = Wand;
   });
@@ -16,7 +16,6 @@ describe('Wand', function () {
   it('should fail without any options', function () {
     expect(function(){ wand.init(); } ).to.throw(Error);
   });
-
 
   it('should fail without an html element', function () {
     expect(function(){ wand.init({elem: null}); } ).to.throw(Error);

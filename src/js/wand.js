@@ -3,7 +3,7 @@ var Wand = (function() {
   var wand = {};
 
   var options, nodes, elem;
-  wand.state = [];
+  wand.state = WandState;
 
   var badHtmlError = new Error('You did not pass a valid HTML Element');
 
@@ -15,20 +15,17 @@ var Wand = (function() {
       throw badHtmlError;
     }
 
+    wand.opts = opts;
+
     nodes = opts.nodes;
     elem = document.getElementById(opts.elem);
     elem.className += ' wand';
 
-    var urlState = getParameterByName("wandState");
-    if (urlState){
-      wand.state = urlState;
-      
-      var wandHistory = urlState.split(',');
-      renderNode(wandHistory[wandHistory.length - 1]);
-    } else {
-      wand.state = [];
-      renderNode(0);
-    }
+    wand.state = WandState;
+
+    _firstNode = wand.state.init();
+    renderNode(_firstNode);
+
   };
 
 
@@ -48,7 +45,7 @@ var Wand = (function() {
       throw new Error('redundant unfound node error');
     }
     // push node into State array
-    addToState(nodeId);
+    wand.state.addToState(nodeId);
     // puts stuff into a template
     elem.innerHTML = '<h1>' + node.title + '</h1>';
     elem.innerHTML += '<div class="node-contents">' + node.content + '</div>';
@@ -57,35 +54,6 @@ var Wand = (function() {
         renderTrigger(node.triggers[i]);
       }
     }
-  }
-
-  function addUrlParam(search, key, val) {
-    var newParam = key + '=' + val,
-      params = '?' + newParam;
-
-    // If the "search" string exists, then build params from it
-    if (search) {
-      // Try to replace an existance instance
-      params = search.replace(new RegExp('([\?&])' + key + '[^&]*'), '$1' + newParam);
-
-      // If nothing was replaced, then add the new param to the end
-      if (params === search) {
-        params += '&' + newParam;
-      }
-    }
-
-    return params;
-  }
-  function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-      results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-  }
-
-  function addToState(nodeId) {
-    wand.state.push(nodeId);
-    history.pushState(wand.state, "", addUrlParam(document.location.search, "wandState", wand.state));
   }
 
   function renderTrigger(trigger) {
@@ -98,8 +66,6 @@ var Wand = (function() {
     elem.appendChild(button);
   }
 
-
-
   return wand;
 
-}());
+}(Wand || {}));

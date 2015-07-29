@@ -18,36 +18,48 @@ describe('Wand History', function() {
 
   beforeEach(function() {
     var _elem = document.createElement('div');
-    _elem.setAttribute('id', elemId);
+    _elem.id = elemId;
     document.body.appendChild(_elem);
-    wand = Wand
-    wand.init(opts);
   });
 
-
-
-  it('should know the first node', function() {
-    expect(Wand.state).to.deep.equal([0]);
+  afterEach(function() {
+    window.history.pushState(null, null, '/');
   });
 
-  it('should know the second node', function() {
-    document.getElementById(elemId).getElementsByTagName("button")[0].click();
-    expect(Wand.state).to.deep.equal([0, 1]);
-  });
+  describe('From starting node', function() {
 
-  it('should encode the state into the url', function() {
-    expect(getParameterByName("wandState")).to.equal("0");
-  });
+    beforeEach(function() {
+      wand = Wand;
+      wand.init(opts);
+    });
 
-  it('should encode the state past the first node into the url', function() {
-    document.getElementById(elemId).getElementsByTagName("button")[0].click();
-    expect(getParameterByName("wandState")).to.equal("0,1");
-  });
+    it('should know the first node', function() {
+      expect(Wand.state.getState()).to.deep.equal([0]);
+    });
 
+    it('should know the second node', function() {
+      document.getElementById(elemId).getElementsByTagName("button")[0].click();
+      expect(Wand.state.getState()).to.deep.equal([0, 1]);
+    });
+
+    it('should encode the state into the url', function() {
+      expect(getParameterByName("wandState")).to.equal("0");
+    });
+
+    it('should encode the state past the first node into the url', function() {
+      document.getElementById(elemId).getElementsByTagName("button")[0].click();
+      expect(getParameterByName("wandState")).to.equal("0,1");
+    });
+
+  });
 
   it('should check for wandState queryString and set history appropriately', function() {
-    document.location.search = addUrlParam(document.location.search, "wandState", [0, 1])
-    expect(Wand.state).to.deep.equal([0, 1]);
+    window.history.pushState(
+      [0,1], "", addUrlParam(document.location.search, "wandState", [0,1])
+    );
+    wand = Wand;
+    wand.init(opts);
+    expect(Wand.state.getState()).to.deep.equal([0, 1]);
   });
 
   var addUrlParam = function(search, key, val) {
@@ -66,7 +78,7 @@ describe('Wand History', function() {
     }
 
     return params;
-  }
+  };
 
   var getParameterByName = function(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
