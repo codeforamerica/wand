@@ -22,7 +22,7 @@ var Wand = (function(wand) {
     wand.elem = document.getElementById(opts.elem);
     wand.elem.className += ' wand';
 
-    if (!checkApiCallbackFns()) {
+    if (checkApiCallbackFns() === false) {
       throw noSuchCallbackError;
     }
 
@@ -38,7 +38,7 @@ var Wand = (function(wand) {
   function checkApiCallbackFns() {
     var validCallbackFns = true;
     wand.opts.nodes.forEach(function(node) {
-      if (!node.type === 'api') {
+      if (node.type !== 'api') {
         return;
       }
       node.triggers.forEach(function(trigger) {
@@ -50,7 +50,7 @@ var Wand = (function(wand) {
       });
     });
     return validCallbackFns;
-  };
+  }
 
   // stolen from underscore.js
   function isFunction(obj) {

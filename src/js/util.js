@@ -1,5 +1,6 @@
 var Wand = (function(wand) {
 
+  /*jshint validthis: true */
   'use strict';
 
   wand = wand || {};

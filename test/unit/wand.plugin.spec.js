@@ -3,7 +3,7 @@ describe('Wand plugin', function () {
   var _elem, wand;
   var expect = chai.expect;
   var elemId = 'testDiv';
-  var nodes = [{"id": 0}];
+  var nodes = [{"id": 0, 'triggers': []}];
   var opts = {elem: elemId, nodes: nodes};
 
   beforeEach(function () {

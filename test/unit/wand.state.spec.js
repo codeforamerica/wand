@@ -7,10 +7,11 @@ describe('Wand State', function() {
     elem: elemId,
     nodes: [{
       "id": 0, "title": "First Node", "type": "pickOne",
-      "triggers": [{ "target": 1, "content": "test" }]
+      "triggers": [{ "target": 1, "content": "test" }],
     }, {
-      "id": 1, "title": "Second Node", "type": "pickOne"
-    }]
+      "id": 1, "title": "Second Node", "type": "pickOne", 'triggers': [],
+    }],
+    callbackFns: []
   };
 
   beforeEach(function() {
@@ -92,7 +93,5 @@ describe('Wand State', function() {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
       results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-  }
-
-
+  };
 });
