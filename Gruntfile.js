@@ -60,6 +60,10 @@ module.exports = function (grunt) {
       single: {
         singleRun: true,
         reporters: ['spec']
+      },
+      continuous: {
+        singleRun: false,
+        reporters: ['spec']
       }
     },
 

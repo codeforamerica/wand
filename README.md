@@ -43,4 +43,4 @@ Currently, Wand is constructed using [Grunt](http://gruntjs.com/), which relies 
 
 ## Testing
 
-Tests can be found in the `test` directory. To run tests, use `npm test`.
+Tests can be found in the `test` directory. To run tests, use `npm test`. If you want to run tests continuously in the background, you can run `grunt karma:continuous`. This will boot up a continuously-running instance of the tests that will run whenever any code changes.
