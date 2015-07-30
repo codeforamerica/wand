@@ -32,11 +32,23 @@ var Wand = (function(wand, Handlebars) {
   };
 
   function renderTrigger(trigger, type) {
-    var button = document.createElement('button');
-    button.innerHTML = Handlebars.compile(wand.template.triggers[type])(trigger);
-    button.onclick = function(event) {
-      wand.engine.renderNode(trigger.target);
-    };
+    var triggerHtml = Handlebars.compile(wand.template.triggers[type])(trigger);
+
+    switch (type) {
+
+      case 'pickOne':
+        var button = document.createElement('button');
+        button.innerHTML = triggerHtml;
+        button.onclick = function(event) {
+          wand.engine.renderNode(trigger.target);
+        };
+        break;
+
+      case 'externalFeedback':
+        var elem = document.createElement('div');
+        elem.innerHTML = triggerHtml;
+
+    }
 
     wand.elem.appendChild(button);
   }

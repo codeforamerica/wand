@@ -11,7 +11,10 @@ var Wand = (function(wand) {
 
   wand.template.triggers = {
 
-    'pickOne': '{{content}}'
+    'pickOne': '{{content}}',
+
+    'custom': '<input type="text" />' +
+      '<button id="Wand-js-{{target}}">{{content}}</button>'
 
   };
 
