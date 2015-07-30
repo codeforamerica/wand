@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="../dist/main.css"/>
+
+</head>
+<body>
+<div id="wizard"></div>
+
+<script src="../dist/wand.js"></script>
+<script>
+
+function handleYesNoApi(xhrResponse) {
+  return JSON.parse(xhrResponse).answer === 'yes' ? 1 : 2;
+}
+
+var options = {
+  elem: "wizard",
+  nodes: [
+  {
+    "id":0,
+    "title": "Some Title",
+    "content": "Do you want a thing or another thing?",
+    "type": "api",
+    "triggers": [
+      {
+        "content": "Is it yes or no?",
+        "api": "http://yesno.wtf/api",
+        "callbackFn": "handleYesNoApi"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "YES!",
+    "content": "You got yes!",
+    "type": "pickOne",
+    "triggers": []
+  },
+  {
+    "id": 2,
+    "title": "NO!",
+    "content": "You got no!",
+    "type": "pickOne",
+    "triggers": []
+  }],
+  callbackFns: {
+    'handleYesNoApi': handleYesNoApi
+  }
+};
+
+Wand.init(options);
+
+</script>
+
+</body>
+</html>
