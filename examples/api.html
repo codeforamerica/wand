@@ -11,9 +11,10 @@
 <script src="../dist/wand.js"></script>
 <script>
 
-function handleYesNoApi(xhrResponse) {
+var nested = {};
+nested.handleYesNoApi = function (xhrResponse) {
   return JSON.parse(xhrResponse).answer === 'yes' ? 1 : 2;
-}
+};
 
 var options = {
   elem: "wizard",
@@ -27,7 +28,7 @@ var options = {
       {
         "content": "Is it yes or no?",
         "api": "http://yesno.wtf/api",
-        "callbackFn": "handleYesNoApi"
+        "callbackFn": "nested.handleYesNoApi"
       }
     ]
   },
@@ -45,9 +46,6 @@ var options = {
     "type": "pickOne",
     "triggers": []
   }],
-  callbackFns: {
-    'handleYesNoApi': handleYesNoApi
-  }
 };
 
 Wand.init(options);
