@@ -85,7 +85,8 @@ module.exports = function (grunt) {
 
     concat: {
       options: {
-        separator: ';'
+        separator: ';',
+        sourceMap: true
       },
       dev: {
         src: [
@@ -93,7 +94,7 @@ module.exports = function (grunt) {
           '<%=handlebars%>/handlebars.js',
           '<%=srcJs%>'
         ],
-        dest: '<%=buildDir%>/wand.js'
+        dest: '<%=buildDir%>/wand.js',
       },
     },
 
