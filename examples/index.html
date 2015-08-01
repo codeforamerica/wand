@@ -16,31 +16,47 @@ var options = {
   nodes: [
   {
     "id":0,
-    "title": "Some Title",
-    "content": "Do you want a thing or another thing?",
+    "title": "Are you having a good time?",
+    "content": "",
     "type": "pickOne",
     "triggers": [
       {
-        "content":"A thing",
+        "content":"Yah dude!",
         "target":1
       },
       {
-        "content":"Another thing",
-        "target":"FART"
+        "content":"Eh, not really.",
+        "target": 3
       }
     ]
   },
   {
     "id":1,
-    "title": "Another Title",
-    "content": "You are on another page.",
+    "title": "Do you want to continue having a good time?",
+    "content": "Don't let the good vibes end.",
+    "type": "pickOne",
+    "triggers": [
+      {
+        "content":"Yes, of course!",
+        "target": 4
+      },
+      {
+        "content":"I'm done for today.",
+        "target": 3
+      },
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Okay.",
+    "content": "We are done here. The good times are complete. This should be a 'result'.",
     "type": "pickOne",
     "triggers": []
   },
   {
-    "id":"FART",
-    "title": "Third Title",
-    "content": "You are on yet another third page again.",
+    "id": 4,
+    "title": "Great.",
+    "content": "Continue having a good time! This should be a 'result'.",
     "type": "pickOne",
     "triggers": []
   }

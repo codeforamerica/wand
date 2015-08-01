@@ -19,9 +19,19 @@ var Wand = (function(wand) {
 
     wand.opts = opts;
 
+
     nodes = opts.nodes;
     wand.elem = document.getElementById(opts.elem);
     wand.elem.className += ' wand';
+
+    // create sidebar to show history unless the user specifies false
+    if (!opts.history) {
+      wand.historyElem = wand.util.createElem('ol', 'wand-history');
+      wand.elem.appendChild(wand.historyElem);
+    }
+    wand.nodeContainer = wand.util.createElem('div', 'wand-node-container');
+    wand.elem.appendChild(wand.nodeContainer);
+
 
     validateWand();
 

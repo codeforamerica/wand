@@ -1,5 +1,13 @@
 // scss goes here
 
 html {
-  font-family: helvetica;
+  font-family: sans-serif;
 }
+
+.wand {}
+.wand-node {}
+.wand-node-container {}
+.wand-history {}
+.wand-history-node {}
+.wand-history-title {}
+.wand-history-answer { display: block; color: #c0c0c0; }
