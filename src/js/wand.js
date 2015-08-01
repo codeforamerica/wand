@@ -8,6 +8,7 @@ var Wand = (function(wand) {
 
   var badHtmlError = new Error('You did not pass a valid HTML Element');
   var noSuchCallbackError = new Error('We could not find a callback function with that name!');
+  var duplicateNodeIdError = new Error('Your nodes contain duplicate IDs.');
 
   wand.init = function(opts) {
     // @params options - object that contains nodes and html container id
@@ -22,9 +23,7 @@ var Wand = (function(wand) {
     wand.elem = document.getElementById(opts.elem);
     wand.elem.className += ' wand';
 
-    if (checkApiCallbackFns() === false) {
-      throw noSuchCallbackError;
-    }
+    validateWand();
 
     var _firstNode = wand.state.init();
     wand.engine.renderNode(_firstNode);
@@ -35,26 +34,50 @@ var Wand = (function(wand) {
 
   };
 
-  function checkApiCallbackFns() {
-    var validCallbackFns = true;
+  function validateWand() {
+    var nodeIds = [];
+
     wand.opts.nodes.forEach(function(node) {
 
-      if (node.type !== 'api') {
-        return;
+      if (hasValidApiCallbackFns(node) === false) {
+        throw noSuchCallbackError;
       }
 
-      node.triggers.forEach(function(trigger) {
-        var triggerFn = getFuncFromString(trigger.callbackFn);
-        if (triggerFn !== null) {
-          trigger.callbackFn = triggerFn;
-          return;
-        }
-        validCallbackFns = false;
-      });
+      nodeIds = hasUniqueNodeIds(node, nodeIds);
+      if (nodeIds === false) {
+        throw duplicateNodeIdError;
+      }
 
     });
 
+  }
+
+  function hasValidApiCallbackFns(node) {
+    var validCallbackFns = true;
+    if (node.type !== 'api') {
+      return;
+    }
+
+    node.triggers.forEach(function(trigger) {
+      var triggerFn = getFuncFromString(trigger.callbackFn);
+      if (triggerFn !== null) {
+        trigger.callbackFn = triggerFn;
+        return;
+      }
+      validCallbackFns = false;
+    });
+
     return validCallbackFns;
+
+  }
+
+  function hasUniqueNodeIds(node, nodeIds) {
+    if (nodeIds.indexOf(node.id) > -1) {
+      return false;
+    }
+
+    nodeIds.push(node.id);
+    return nodeIds;
 
   }
 

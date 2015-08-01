@@ -34,8 +34,12 @@ describe('Wand', function () {
   });
 
   it('should fail with a bad html element', function () {
-    // test that we pass successfully
     expect(function(){ wand.init({elem: 'NOELEMENTHERE'}); } ).to.throw(Error);
+  });
+
+  it('should fail with duplicate nodes', function() {
+    opts.nodes = [{'id': 0}, {'id': 0}];
+    expect(function() { wand.init(opts); }).to.throw(Error);
   });
 
   it('should successfully initialize with a valid options', function () {
