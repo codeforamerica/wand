@@ -88,7 +88,7 @@ var Wand = (function(wand, Handlebars) {
         }
       }
 
-
+      // append the wand history element
       wand.historyElem.appendChild(historyNodeElem);
     }
   }

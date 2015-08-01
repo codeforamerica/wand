@@ -102,7 +102,6 @@ module.exports = function (grunt) {
       js: {
         files: ['<%=srcJs%>'],
         tasks: [
-          'clean:dist',
           'concat:dev'
         ],
         options: {
@@ -112,7 +111,6 @@ module.exports = function (grunt) {
       sass: {
         files: ['<%=srcSass%>'],
         tasks: [
-          'clean:dist',
           'concat:dev',
           'sass'
         ],
@@ -123,7 +121,6 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js'],
         tasks: [
-          'clean:dist',
           'concat:dev'
         ]
       }

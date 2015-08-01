@@ -26,9 +26,10 @@ var Wand = (function(wand) {
   }
 
   // creates a DOM node with specified classNames
-  wand.util.createElem = function(type, className) {
+  wand.util.createElem = function(type, className, id) {
     var elem = document.createElement(type);
     if (className) elem.className = className;
+    if (id) elem.id = id;
     return elem;
   };
 
