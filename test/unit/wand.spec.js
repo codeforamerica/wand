@@ -3,7 +3,7 @@ describe('Wand', function () {
 
   var _elem, wand, opts;
   var expect = chai.expect;
-  var elemId = 'testDiv';
+  var elemId = 'wandSpecDiv';
   var nodes = [{"id": 0, 'type': 'pickOne', 'title': "node 0 title", "content": "foo", "triggers": []}];
   var badApiTrigger = [{"callbackFn": "DOESNOTEXIST", "content": "test"}];
   var goodApiTrigger = [{"callbackFn": "aFunction", "content": "test"}];
@@ -23,6 +23,10 @@ describe('Wand', function () {
 
   afterEach(function() {
     opts = {};
+    var node = document.getElementById(elemId);
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
   });
 
   it('should fail without any options', function () {

@@ -2,7 +2,7 @@ describe('Wand plugin', function () {
 
   var _elem, wand;
   var expect = chai.expect;
-  var elemId = 'testDiv';
+  var elemId = 'pluginSpecDiv';
   var nodes = [{"id": 0, 'triggers': []}];
   var opts = {elem: elemId, nodes: nodes};
 
@@ -10,6 +10,13 @@ describe('Wand plugin', function () {
     var _elem = document.createElement('div');
     _elem.setAttribute('id', elemId);
     document.body.appendChild(_elem);
+  });
+
+  afterEach(function() {
+    var node = document.getElementById(elemId);
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
   });
 
   it('should allow for new public methods on wand object', function(){
