@@ -46,28 +46,29 @@ describe('Wand State', function() {
 
     it('should know the second node', function() {
       document.getElementById(elemId).getElementsByTagName("button")[0].click();
+      console.log(Wand.state.getState());
       expect(Wand.state.getState()).to.deep.equal([0, 1]);
     });
 
-    it('should encode the state into the url', function() {
-      expect(getParameterByName("wandState")).to.equal("0");
-    });
+    // it('should encode the state into the url', function() {
+    //   expect(getParameterByName("wandState")).to.equal("0");
+    // });
 
-    it('should encode the state past the first node into the url', function() {
-      document.getElementById(elemId).getElementsByTagName("button")[0].click();
-      expect(getParameterByName("wandState")).to.equal("0,1");
-    });
+    // it('should encode the state past the first node into the url', function() {
+    //   document.getElementById(elemId).getElementsByTagName("button")[0].click();
+    //   expect(getParameterByName("wandState")).to.equal("0,1");
+    // });
 
-    it('should navigate back properly', function(done) {
-      document.getElementById(elemId).getElementsByTagName("button")[0].click();
-      // setTimeout from http://cgrune.com/2013/10/25/testing-window-history/
-      setTimeout(function() {
-        window.history.back();
-      }, 10);
-      done();
-      expect(getParameterByName("wandState")).to.equal("0");
-      expect(Wand.state.getState()).to.deep.equal([0]);
-    });
+    // it('should navigate back properly', function(done) {
+    //   document.getElementById(elemId).getElementsByTagName("button")[0].click();
+    //   // setTimeout from http://cgrune.com/2013/10/25/testing-window-history/
+    //   setTimeout(function() {
+    //     window.history.back();
+    //   }, 10);
+    //   done();
+    //   expect(getParameterByName("wandState")).to.equal("0");
+    //   expect(Wand.state.getState()).to.deep.equal([0]);
+    // });
 
   });
   var addUrlParam = function(search, key, val) {

@@ -25,14 +25,14 @@ var Wand = (function(wand) {
     return xhr;
   }
 
-  // creates a DOM node with specified classNames
-  wand.util.createElem = function(type, className, id) {
+  // creates a DOM node with specified classNames and id
+  wand.util.createElem = function(type, className, innerHTML) {
     var elem = document.createElement(type);
     if (className) {
       elem.className = className;
     }
-    if (id) {
-      elem.id = id;
+    if (innerHTML) {
+      elem.innerHTML = innerHTML;
     }
     return elem;
   };

@@ -29,7 +29,7 @@ var Wand = (function(wand) {
       wand.historyElem = wand.util.createElem('ol', 'wand-history');
       wand.elem.appendChild(wand.historyElem);
     }
-    wand.nodeContainer = wand.util.createElem('div', 'wand-node-container', 'my-custom-id');
+    wand.nodeContainer = wand.util.createElem('div', 'wand-node-container');
     wand.elem.appendChild(wand.nodeContainer);
 
 

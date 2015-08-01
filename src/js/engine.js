@@ -39,8 +39,7 @@ var Wand = (function(wand, Handlebars) {
     switch (type) {
 
       case 'pickOne':
-        var button = document.createElement('button');
-        button.innerHTML = triggerHtml;
+        var button = wand.util.createElem('button', 'wand-trigger', triggerHtml);
         button.onclick = function(event) {
           wand.engine.renderNode(trigger.target);
         };
