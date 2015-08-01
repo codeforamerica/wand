@@ -13,10 +13,18 @@ html {
   .wand-history-node {
     border-color: $color;
     &:before {
-      background-color: $color;
+      background-color: white;
+      border: 0.2em solid $color;
     }
   }
-  .wand-history-answer {
+  .wand-node-container {
+    border-color: $color;
+    &:before {
+      background-color: $color;
+      border: 0.2em solid $color;
+    }
+  }
+  .wand-history-title {
     color: $color;
   }
 }
@@ -33,7 +41,38 @@ html {
   }
 }
 .wand-node {}
-.wand-node-container {}
+.wand-node-container {
+  border-left-width: 0.2em;
+  border-left-style: solid;
+  padding: 0.2em 1em 1em;
+  margin-left: 1em;
+  position: relative;
+  &:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: -0.55em;
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 100%;
+  }
+  &:after {
+    position: absolute;
+    content: " ";
+    bottom: 0;
+    left: -0.55em;
+    width: 0.9em;
+    height: 0.2em;
+    background: steelblue;
+  }
+}
+.wand-node-title {
+  font-size: 1.5em;
+  margin: -0.4em 0 0.5em;
+}
+.wand-node-content {
+  margin: 0;
+}
 
 .wand-trigger {
   text-transform:uppercase;
@@ -47,31 +86,32 @@ html {
 }
 
 .wand-history {
-  width: 400px;
+  width: 400px; // temporary
   list-style-type: none;
   margin: 0;
-  padding: 1em;
+  padding: 1em 1em 0;
 }
 .wand-history-node {
   position: relative;
   padding: 0 0 20px 1em;
-  border-left-width: 0.15em;
+  border-left-width: 0.2em;
   border-left-style: solid;
   &:before {
     content: " ";
     position: absolute;
     top: 0;
     left: -0.55em;
-    width: 0.6em;
-    height: 0.6em;
-    border-radius: 50%;
-    border: 0.2em solid white;
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 100%;
+  }
+  &:last-child {
+    padding-bottom: 3em;
   }
 }
-.wand-history-title {
-  font-weight: 800;
-}
+.wand-history-title {}
 .wand-history-answer { 
   font-size: 0.9em;
   display: block;
+  font-weight: 900;
 }
