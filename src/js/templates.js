@@ -18,9 +18,6 @@ var Wand = (function(wand) {
 
   };
 
-  // wand.template.history = {
-  //   'node': ''
-  // }
-
   return wand;
+  
 }(Wand || {}));

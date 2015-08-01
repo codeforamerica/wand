@@ -72,6 +72,7 @@ var Wand = (function(wand, Handlebars) {
   // redraws every time a node renders using the state array
   function renderHistory(stateArray) {
     wand.historyElem.innerHTML = ""; // clear history
+    var historyList = wand.util.createElem('ol', 'wand-history');
     for (var s = 0; s < stateArray.length - 1; s++) {
       var node = wand.util.getNodeObject(stateArray[s]); // get node that matches state
       var nextNodeId = stateArray[s + 1]; // get the next nodeId in the state array for finding user response
@@ -88,8 +89,9 @@ var Wand = (function(wand, Handlebars) {
       }
 
       // append the wand history element
-      wand.historyElem.appendChild(historyNodeElem);
+      historyList.appendChild(historyNodeElem);
     }
+    wand.historyElem.appendChild(historyList);
   }
 
   return wand;

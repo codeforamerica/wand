@@ -85,8 +85,11 @@ html {
   cursor: pointer;
 }
 
-.wand-history {
+.wand-history-container {
   width: 400px; // temporary
+  margin: 0;
+}
+.wand-history {
   list-style-type: none;
   margin: 0;
   padding: 1em 1em 0;
