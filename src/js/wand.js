@@ -22,14 +22,14 @@ var Wand = (function(wand) {
 
     nodes = opts.nodes;
     wand.elem = document.getElementById(opts.elem);
-    wand.elem.className += ' wand wand-blue';
+    wand.elem.className += ' wand';
 
     // create sidebar to show history unless the user specifies false
     if (!opts.history) {
-      wand.historyElem = wand.util.createElem('aside', 'wand-history-container');
+      wand.historyElem = wand.util.createElem('aside', 'wand_history_container');
       wand.elem.appendChild(wand.historyElem);
     }
-    wand.nodeContainer = wand.util.createElem('div', 'wand-node-container');
+    wand.nodeContainer = wand.util.createElem('div', 'wand_node_container');
     wand.elem.appendChild(wand.nodeContainer);
 
 
