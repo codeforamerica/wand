@@ -11,6 +11,7 @@ var Wand = (function(wand) {
   var duplicateNodeIdError = new Error('Your nodes contain duplicate IDs.');
 
   wand.init = function(opts) {
+    // console.log(JSON.parse(opts));
     // @params options - object that contains nodes and html container id
     options = opts || {}; // {} if no options, empty object
     if (!opts.elem || !document.getElementById(opts.elem)) {
@@ -22,14 +23,14 @@ var Wand = (function(wand) {
 
     nodes = opts.nodes;
     wand.elem = document.getElementById(opts.elem);
-    wand.elem.className += ' wand';
+    wand.elem.className += ' wand-container';
 
     // create sidebar to show history unless the user specifies false
     if (!opts.history) {
-      wand.historyElem = wand.util.createElem('aside', 'wand_history_container');
+      wand.historyElem = wand.util.createElem('aside', 'wand-history-container');
       wand.elem.appendChild(wand.historyElem);
     }
-    wand.nodeContainer = wand.util.createElem('div', 'wand_node_container');
+    wand.nodeContainer = wand.util.createElem('div', 'wand-node-container');
     wand.elem.appendChild(wand.nodeContainer);
 
 
@@ -43,6 +44,24 @@ var Wand = (function(wand) {
     };
 
   };
+
+  wand.initGist = function(gist) {
+    var gist = gist.split('/')[gist.split('/').length-1];
+    var url = 'https://api.github.com/gists/' + gist;
+    var response = wand.util.loadXhr(url, function(xhr) {
+      if (xhr.status === 200) {
+        var data = JSON.parse(xhr.response);
+        // we probably want to force a filename if using gist
+        // instead of using a for loop
+        for (var filename in data.files) {
+          var file = data.files[filename];
+          wand.init(JSON.parse(file.content));
+        }
+      } else {
+        console.error('The XHR response returned an error!');
+      }
+    });
+  }
 
   function validateWand() {
     var nodeIds = [];
