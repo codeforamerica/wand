@@ -56,6 +56,7 @@ var Wand = (function(wand, Handlebars) {
         var submitButton = elem.querySelector('#Wand-submit-' + trigger._id);
 
         submitButton.onclick = function(event) {
+          var response;
           var inputData = elem.querySelector('#Wand-input-' + trigger._id);
 
           if (trigger.preprocessor) {
@@ -63,11 +64,11 @@ var Wand = (function(wand, Handlebars) {
           }
 
           if (trigger.jsonp === true) {
-            var response = wand.util.loadJsonp(trigger.api, params, function(data) {
+            response = wand.util.loadJsonp(trigger.api, params, function(data) {
               wand.engine.renderNode(trigger.callbackFn(data));
             });
           } else {
-            var response = wand.util.loadXhr(trigger, params, function(xhr) {
+            response = wand.util.loadXhr(trigger, params, function(xhr) {
               if (xhr.status === 200) {
                 wand.engine.renderNode(trigger.callbackFn(xhr.response));
               } else {

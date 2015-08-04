@@ -8,10 +8,11 @@ var Wand = (function(wand) {
 
   wand.util.encodeParams = function(objParams) {
     var str = [];
-    for(var p in objParams)
+    for(var p in objParams) {
       if (objParams.hasOwnProperty(p)) {
         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(objParams[p]));
       }
+    }
     return str.join("&");
   };
 
