@@ -59,6 +59,15 @@ var Wand = (function(wand) {
     }
 
     node.triggers.forEach(function(trigger) {
+
+      // Let's call the (optional) preprocessor
+      if (trigger.preprocessor) {
+        var preprocessorFn = getFuncFromString(trigger.preprocessor);
+        if (preprocessorFn !== null) {
+          trigger.preprocessor = preprocessorFn;
+        }
+      }
+
       var triggerFn = getFuncFromString(trigger.callbackFn);
       if (triggerFn !== null) {
         trigger.callbackFn = triggerFn;

@@ -6,12 +6,34 @@ var Wand = (function(wand) {
   wand = wand || {};
   wand.util = {};
 
-  wand.util.loadXhr = function(url, callback) {
-    console.debug('Retrieving url ' + url);
-    return getRequest(url, callback);
+  wand.util.encodeParams = function(objParams) {
+    var str = [];
+    for(var p in objParams)
+      if (objParams.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(objParams[p]));
+      }
+    return str.join("&");
   };
 
-  function getRequest(url, callback) {
+  wand.util.loadXhr = function(trigger, params, callback) {
+    console.debug('Retrieving url ' + trigger.url);
+    return getRequest(trigger.url, params, callback);
+  };
+
+  wand.util.loadJsonp = function(url, params, callback) {
+    var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+    window[callbackName] = function(data) {
+      delete window[callbackName];
+      document.body.removeChild(script);
+      callback(data);
+    };
+
+    var script = document.createElement('script');
+    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + params + '&callback=' + callbackName;
+    document.body.appendChild(script);
+  };
+
+  function getRequest(url, params, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', encodeURI(url));
 
@@ -20,7 +42,7 @@ var Wand = (function(wand) {
       console.error(xhr);
     };
 
-    xhr.send();
+    xhr.send(params);
 
     return xhr;
   }

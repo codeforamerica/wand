@@ -49,17 +49,33 @@ var Wand = (function(wand, Handlebars) {
         break;
 
       case 'api':
+        var params = '';
         var elem = document.createElement('div');
+        elem.id = 'wand-trigger-' + trigger._id;
         elem.innerHTML = triggerHtml;
-        var _trigger = elem.querySelector('#Wand-js-' + trigger._id);
-        _trigger.onclick = function(event) {
-          var response = wand.util.loadXhr(trigger.api, function(xhr) {
-            if (xhr.status === 200) {
-              wand.engine.renderNode(trigger.callbackFn(xhr.response));
-            } else {
-              console.error('The XHR response returned an error!');
-            }
-          });
+        var submitButton = elem.querySelector('#Wand-submit-' + trigger._id);
+
+        submitButton.onclick = function(event) {
+          var inputData = elem.querySelector('#Wand-input-' + trigger._id);
+
+          if (trigger.preprocessor) {
+            params = wand.util.encodeParams(trigger.preprocessor(inputData.value));
+          }
+
+          if (trigger.jsonp === true) {
+            var response = wand.util.loadJsonp(trigger.api, params, function(data) {
+              wand.engine.renderNode(trigger.callbackFn(data));
+            });
+          } else {
+            var response = wand.util.loadXhr(trigger, params, function(xhr) {
+              if (xhr.status === 200) {
+                wand.engine.renderNode(trigger.callbackFn(xhr.response));
+              } else {
+                console.error('The XHR response returned an error!');
+              }
+            });
+          }
+
         };
 
         wand.elem.appendChild(elem);
