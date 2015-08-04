@@ -90,11 +90,11 @@ var Wand = (function(wand) {
 
   }
 
-  /**
-   * Converts a string containing a function or object method name to a function pointer.
-   * @param  string   func
-   * @return function
-   */
+/**
+ * Converts a string containing a function or object method name to a function pointer.
+ * @param {string} func
+ * @return {function}
+ */
   function getFuncFromString(func) {
     // if already a function, return
     if (typeof func === 'function') { return func; }

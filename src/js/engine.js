@@ -5,6 +5,11 @@ var Wand = (function(wand, Handlebars) {
   wand = wand || {};
   wand.engine = {};
 
+/**
+ * Renders the node given the id.
+ * @param {string} nodeId - The id of the trigger node.
+ * @returns {object} The node of the wizard
+ */
   function getNode(nodeId) {
     for (var i = wand.opts.nodes.length - 1; i >= 0; i--) {
       if (wand.opts.nodes[i].id === nodeId) {
@@ -15,6 +20,10 @@ var Wand = (function(wand, Handlebars) {
     return;
   }
 
+/**
+ * Renders the node and the triggers for that node.
+ * @param {string} nodeId - The id of the trigger node.
+ */
   wand.engine.renderNode = function(nodeId) {
     var node = getNode(nodeId);
     if (!node) {
@@ -31,6 +40,12 @@ var Wand = (function(wand, Handlebars) {
     }
   };
 
+/**
+ * Renders the triggers, event handlers and performs necessary business logic.
+ * @param {object} trigger - The trigger object.
+ * @param {string} id - The id of the trigger node.
+ * @param {string} type - Renders a specific trigger type (pickOne, api, etc.)
+ */
   function renderTrigger(trigger, id, type) {
     trigger._id = id;
     var triggerHtml = Handlebars.compile(wand.template.triggers[type])(trigger);

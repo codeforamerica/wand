@@ -6,6 +6,11 @@ var Wand = (function(wand) {
   wand = wand || {};
   wand.util = {};
 
+/**
+ * Take an object of parameters and convert it into a GET query string
+ * @param {object}
+ * @returns {string}
+ */
   wand.util.encodeParams = function(objParams) {
     var str = [];
     for(var p in objParams) {
@@ -16,11 +21,23 @@ var Wand = (function(wand) {
     return str.join("&");
   };
 
+/**
+ * Make an XHR call for regular APIs that don't have CORS issues.
+ * @param {string} url
+ * @param {string} params
+ * @param {function} callback
+ */
   wand.util.loadXhr = function(trigger, params, callback) {
     console.debug('Retrieving url ' + trigger.url);
     return getRequest(trigger.url, params, callback);
   };
 
+/**
+ * For APIs that have Cross-origin resource sharing issues, bring in a method for JSONP.
+ * @param {string} url
+ * @param {string} params
+ * @param {function} callback
+ */
   wand.util.loadJsonp = function(url, params, callback) {
     var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
     window[callbackName] = function(data) {
@@ -34,6 +51,12 @@ var Wand = (function(wand) {
     document.body.appendChild(script);
   };
 
+/**
+ * Handles XMLHttpRequests, similar to jQuery's .ajax method.
+ * @param {string} url
+ * @param {string} params
+ * @param {function} callback
+ */
   function getRequest(url, params, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', encodeURI(url));
