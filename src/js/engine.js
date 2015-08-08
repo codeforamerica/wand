@@ -17,6 +17,11 @@ var Wand = (function(wand, Handlebars) {
       }
     }
     console.error('Node does not exist:', nodeId);
+    wand.notification.add({
+      text: 'Node does not exist: ' + nodeId,
+      type: 'alert',
+      time: 3500
+    });
     return;
   }
 
@@ -28,6 +33,11 @@ var Wand = (function(wand, Handlebars) {
     var node = getNode(nodeId);
     if (!node) {
       throw new Error('redundant unfound node error');
+      wand.notification.add({
+        text: 'redundant unfound node error',
+        type: 'alert',
+        time: 3500
+      });
     }
     // push node into State array
     wand.state.addToState(nodeId);
@@ -109,7 +119,7 @@ var Wand = (function(wand, Handlebars) {
       var node = wand.util.getNodeObject(stateArray[s]); // get node that matches state
       var nextNodeId = stateArray[s + 1]; // get the next nodeId in the state array for finding user response
       var historyNodeElem = wand.util.createElem('li', 'wand_history_node');
-      
+
       // append the history title/question
       historyNodeElem.innerHTML = '<span class="wand_history_title">'+node.title+'</span>';
 
