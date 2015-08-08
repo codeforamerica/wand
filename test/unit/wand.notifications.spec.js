@@ -1,0 +1,2 @@
+describe('Wand Notifications', function() {
+});

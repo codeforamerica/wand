@@ -16,12 +16,6 @@ var Wand = (function(wand, Handlebars) {
         return wand.opts.nodes[i];
       }
     }
-    console.error('Node does not exist:', nodeId);
-    wand.notification.add({
-      text: 'Node does not exist: ' + nodeId,
-      type: 'alert',
-      time: 3500
-    });
     return;
   }
 
@@ -32,12 +26,11 @@ var Wand = (function(wand, Handlebars) {
   wand.engine.renderNode = function(nodeId) {
     var node = getNode(nodeId);
     if (!node) {
-      throw new Error('redundant unfound node error');
-      wand.notification.add({
-        text: 'redundant unfound node error',
-        type: 'alert',
-        time: 3500
+      wand.notifications.add({
+        text: 'Node does not exist: ' + nodeId,
+        type: 'alert'
       });
+      throw wand.errors.nodeDoesNotExistError;
     }
     // push node into State array
     wand.state.addToState(nodeId);
@@ -97,7 +90,12 @@ var Wand = (function(wand, Handlebars) {
               if (xhr.status === 200) {
                 wand.engine.renderNode(trigger.callbackFn(xhr.response));
               } else {
-                console.error('The XHR response returned an error!');
+                wand.notifications.add({
+                  text: 'The XHR response returned an error: ' + xhr.response,
+                  type: 'alert',
+                  time: 3500
+                });
+                throw wand.errors.badXHRResponseError;
               }
             });
           }
