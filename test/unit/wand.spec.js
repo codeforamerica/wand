@@ -50,6 +50,11 @@ describe('Wand', function () {
     wand.init(opts);
   });
 
+  it('should have a container class of wand-container', function () {
+    wand.init(opts);
+    expect(document.getElementsByClassName('wand-container').length).to.eq(1);
+  });
+
   describe('Wand API Node', function() {
 
     beforeEach(function() {

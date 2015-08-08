@@ -22,7 +22,7 @@ var Wand = (function(wand) {
 
     nodes = opts.nodes;
     wand.elem = document.getElementById(opts.elem);
-    wand.elem.className += ' wand';
+    wand.elem.className += ' wand-container';
 
     // create sidebar to show history unless the user specifies false
     if (!opts.history) {

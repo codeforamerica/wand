@@ -29,9 +29,9 @@ html {
   }
 }
 
-.wand {
+.wand-container {
   @include color_cascade();
-  
+
   &.wand-blue {
     @include color_cascade(steelblue);
   }
@@ -39,82 +39,83 @@ html {
   &.wand-red {
     @include color_cascade(brick-red);
   }
-}
-.wand_node {}
-.wand_node_container {
-  border-left-width: 0.2em;
-  border-left-style: solid;
-  padding: 0.2em 1em 1em;
-  margin-left: 1em;
-  position: relative;
-  &:before {
-    content: " ";
-    position: absolute;
-    top: 0;
-    left: -0.55em;
-    width: 0.55em;
-    height: 0.55em;
-    border-radius: 100%;
-  }
-  &:after {
-    position: absolute;
-    content: " ";
-    bottom: 0;
-    left: -0.55em;
-    width: 0.9em;
-    height: 0.2em;
-    background: steelblue;
-  }
-}
-.wand_node_title {
-  font-size: 1.5em;
-  margin: -0.4em 0 0.5em;
-}
-.wand_node_content {
-  margin: 0;
-}
 
-.wand_trigger {
-  text-transform:uppercase;
-  padding: 1em 2em;
-  font-size: 0.7em;
-  letter-spacing: 0.1em;
-  background: transparent;
-  margin-right: 1em;
-  font-weight: 700;
-  cursor: pointer;
-}
+  .wand_node {}
+  .wand_node_container {
+    border-left-width: 0.2em;
+    border-left-style: solid;
+    padding: 0.2em 1em 1em;
+    margin-left: 1em;
+    position: relative;
+    &:before {
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: -0.55em;
+      width: 0.55em;
+      height: 0.55em;
+      border-radius: 100%;
+    }
+    &:after {
+      position: absolute;
+      content: " ";
+      bottom: 0;
+      left: -0.55em;
+      width: 0.9em;
+      height: 0.2em;
+      background: steelblue;
+    }
+  }
+  .wand_node_title {
+    font-size: 1.5em;
+    margin: -0.4em 0 0.5em;
+  }
+  .wand_node_content {
+    margin: 0;
+  }
 
-.wand_history_container {
-  width: 400px; // temporary
-  margin: 0;
-}
-.wand_history {
-  list-style-type: none;
-  margin: 0;
-  padding: 1em 1em 0;
-}
-.wand_history_node {
-  position: relative;
-  padding: 0 0 20px 1em;
-  border-left-width: 0.2em;
-  border-left-style: solid;
-  &:before {
-    content: " ";
-    position: absolute;
-    top: 0;
-    left: -0.55em;
-    width: 0.55em;
-    height: 0.55em;
-    border-radius: 100%;
+  .wand_trigger {
+    text-transform:uppercase;
+    padding: 1em 2em;
+    font-size: 0.7em;
+    letter-spacing: 0.1em;
+    background: transparent;
+    margin-right: 1em;
+    font-weight: 700;
+    cursor: pointer;
   }
-  &:last-child {
-    padding-bottom: 3em;
+
+  .wand_history_container {
+    width: 400px; // temporary
+    margin: 0;
   }
-}
-.wand_history_title {}
-.wand_history_answer { 
-  font-size: 0.9em;
-  display: block;
-  font-weight: 900;
+  .wand_history {
+    list-style-type: none;
+    margin: 0;
+    padding: 1em 1em 0;
+  }
+  .wand_history_node {
+    position: relative;
+    padding: 0 0 20px 1em;
+    border-left-width: 0.2em;
+    border-left-style: solid;
+    &:before {
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: -0.55em;
+      width: 0.55em;
+      height: 0.55em;
+      border-radius: 100%;
+    }
+    &:last-child {
+      padding-bottom: 3em;
+    }
+  }
+  .wand_history_title {}
+  .wand_history_answer {
+    font-size: 0.9em;
+    display: block;
+    font-weight: 900;
+  }
 }
