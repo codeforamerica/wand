@@ -1,7 +1,7 @@
 
 describe('Wand', function () {
 
-  var _elem, wand, opts, notificationAddSpy;
+  var _elem, wand, opts, notificationsSpy;
   var expect = chai.expect;
   var elemId = 'wandSpecDiv';
   var nodes = [{"id": 0, 'type': 'pickOne', 'title': "node 0 title", "content": "foo", "triggers": []}];
@@ -26,11 +26,18 @@ describe('Wand', function () {
     _elem.id = elemId;
     document.body.appendChild(_elem);
     wand = Wand;
+    notificationsSpy = sinon.spy(wand.notifications.add);
   });
 
   afterEach(function() {
     opts = {};
     document.body.innerHTML = '';
+
+    var node = document.getElementById(elemId);
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
+    notificationsSpy.restore();
   });
 
   describe('Basic cases', function() {
@@ -77,6 +84,7 @@ describe('Wand', function () {
     it('should fail to initialize if it cannot find a function in the callbackFns', function() {
       opts.nodes[0].triggers = badApiTrigger;
       expect(function() { wand.init(nodes); }).to.throw(Error);
+      expect(notificationsSpy.callCount).to.eq(1);
     });
 
     it('should initialize properly if the callbackFns are registered', function() {

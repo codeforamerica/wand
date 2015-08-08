@@ -5,7 +5,19 @@ var Wand = (function(wand, Handlebars) {
   wand = wand || {};
   wand.engine = {};
 
-
+/**
+ * Gets the node given the id.
+ * @param {string} nodeId - The id of the trigger node.
+ * @returns {object} The node of the wizard
+ */
+  function getNode(nodeId) {
+    for (var i = wand.opts.nodes.length - 1; i >= 0; i--) {
+      if (wand.opts.nodes[i].id === nodeId) {
+        return wand.opts.nodes[i];
+      }
+    }
+    return;
+  }
 
 /**
  * Renders the node and the triggers for that node.
