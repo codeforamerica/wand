@@ -1,7 +1,7 @@
 
 describe('Wand', function () {
 
-  var _elem, wand, opts;
+  var _elem, wand, opts, notificationsSpy;
   var expect = chai.expect;
   var elemId = 'wandSpecDiv';
   var nodes = [{"id": 0, 'type': 'pickOne', 'title': "node 0 title", "content": "foo", "triggers": []}];
@@ -26,6 +26,7 @@ describe('Wand', function () {
     _elem.id = elemId;
     document.body.appendChild(_elem);
     wand = Wand;
+    notificationsSpy = sinon.spy(wand.notifications.add);
   });
 
   afterEach(function() {
@@ -34,6 +35,7 @@ describe('Wand', function () {
     if (node.parentNode) {
       node.parentNode.removeChild(node);
     }
+    // notificationsSpy.restore();
   });
 
   it('should fail without any options', function () {
@@ -42,20 +44,29 @@ describe('Wand', function () {
 
   it('should fail without an html element', function () {
     expect(function(){ wand.init({elem: null}); } ).to.throw(Error);
+    expect(notificationsSpy.callCount).to.eq(1);
   });
 
   it('should fail with a bad html element', function () {
     expect(function(){ wand.init({elem: 'NOELEMENTHERE'}); } ).to.throw(Error);
+    expect(notificationsSpy.callCount).to.eq(1);
   });
 
   it('should fail with duplicate nodes', function() {
     opts.nodes = [{'id': 0}, {'id': 0}];
     expect(function() { wand.init(opts); }).to.throw(Error);
+    // WORK IN PROGRESS
+    expect(notificationsSpy.callCount).to.eq(1);
   });
 
   it('should successfully initialize with a valid options', function () {
     wand.init(opts);
   });
+
+  it('should create a wand notification hub when initialized', function() {
+    wand.init(opts);
+    should.exist(document.getElementById('wand-notifications-container'));
+  })
 
   it('should have a container class of wand-container', function () {
     wand.init(opts);
@@ -71,6 +82,7 @@ describe('Wand', function () {
     it('should fail to initialize if it cannot find a function in the callbackFns', function() {
       opts.nodes[0].triggers = badApiTrigger;
       expect(function() { wand.init(nodes); }).to.throw(Error);
+      expect(notificationsSpy.callCount).to.eq(1);
     });
 
     it('should initialize properly if the callbackFns are registered', function() {

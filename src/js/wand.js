@@ -6,23 +6,21 @@ var Wand = (function(wand) {
 
   var options, nodes;
 
-  var badHtmlError = new Error('You did not pass a valid HTML Element');
-  var noSuchCallbackError = new Error('We could not find a callback function with that name!');
-  var duplicateNodeIdError = new Error('Your nodes contain duplicate IDs.');
-
   wand.init = function(opts) {
+
     // @params options - object that contains nodes and html container id
     options = opts || {}; // {} if no options, empty object
     if (!opts.elem || !document.getElementById(opts.elem)) {
-      throw badHtmlError;
+      throw wand.errors.badHtmlError;
     }
 
-    wand.opts = opts;
-
-
-    nodes = opts.nodes;
     wand.elem = document.getElementById(opts.elem);
     wand.elem.className += ' wand-container';
+
+    wand.notifications.init();
+
+    wand.opts = opts;
+    nodes = opts.nodes;
 
     // create sidebar to show history unless the user specifies false
     if (!opts.history) {
@@ -50,12 +48,12 @@ var Wand = (function(wand) {
     wand.opts.nodes.forEach(function(node) {
 
       if (hasValidApiCallbackFns(node) === false) {
-        throw noSuchCallbackError;
+        throw wand.errors.noSuchCallbackError;
       }
 
       nodeIds = hasUniqueNodeIds(node, nodeIds);
       if (nodeIds === false) {
-        throw duplicateNodeIdError;
+        throw wand.errors.duplicateNodeIdError;
       }
 
     });
