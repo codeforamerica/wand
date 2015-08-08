@@ -25,6 +25,28 @@ var Wand = (function(wand) {
     return xhr;
   }
 
+  // creates a DOM node with specified classNames and id
+  wand.util.createElem = function(type, className, innerHTML) {
+    var elem = document.createElement(type);
+    if (className) {
+      elem.className = className;
+    }
+    if (innerHTML) {
+      elem.innerHTML = innerHTML;
+    }
+    return elem;
+  };
+
+  // will get a node object by ID
+  wand.util.getNodeObject = function(nodeId) {
+    for (var n = 0; n < wand.opts.nodes.length; n++) {
+      if (nodeId === wand.opts.nodes[n].id) {
+        return wand.opts.nodes[n];
+      }
+    }
+  };
+
+
   return wand;
 
 }(Wand || {}));

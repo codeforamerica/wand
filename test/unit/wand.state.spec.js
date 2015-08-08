@@ -2,7 +2,7 @@ describe('Wand State', function() {
 
   var _elem, wand;
   var expect = chai.expect;
-  var elemId = 'testDiv';
+  var elemId = 'stateSpecDiv';
   var opts = {
     elem: elemId,
     nodes: [{
@@ -22,6 +22,10 @@ describe('Wand State', function() {
 
   afterEach(function() {
     window.history.pushState(null, null, '/');
+    var node = document.getElementById(elemId);
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
   });
 
   it('should check for wandState queryString and set history appropriately', function() {
