@@ -5,26 +5,14 @@ var Wand = (function(wand, Handlebars) {
   wand = wand || {};
   wand.engine = {};
 
-/**
- * Renders the node given the id.
- * @param {string} nodeId - The id of the trigger node.
- * @returns {object} The node of the wizard
- */
-  function getNode(nodeId) {
-    for (var i = wand.opts.nodes.length - 1; i >= 0; i--) {
-      if (wand.opts.nodes[i].id === nodeId) {
-        return wand.opts.nodes[i];
-      }
-    }
-    return;
-  }
+
 
 /**
  * Renders the node and the triggers for that node.
  * @param {string} nodeId - The id of the trigger node.
  */
   wand.engine.renderNode = function(nodeId) {
-    var node = getNode(nodeId);
+    var node = wand.util.getNodeObject(nodeId);
     if (!node) {
       wand.notifications.add({
         text: 'Node does not exist: ' + nodeId,
