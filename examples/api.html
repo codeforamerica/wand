@@ -15,7 +15,8 @@
 
 var nested = {};
 nested.preprocessor = function(address) {
-  // Preprocessors are optional.
+  // Preprocessors are optional. The return value of the preprocessor function
+  // would be fed as parameters into the functional callback (callbackFn).
   /*
   var geocoder = new google.maps.Geocoder();
 
@@ -39,9 +40,9 @@ nested.preprocessor = function(address) {
   return { lat: 25.840171, lon: -8.179727 };
 };
 
-nested.handleYesNoApi = function(xhrResponse) {
-  // return JSON.parse(xhrResponse).answer === 'yes' ? 1 : 2;
-  return xhrResponse.features.length > 0 ? 'UMSA_false' : 'UMSA_true';
+nested.handleYesNoApi = function(preprocessorResponse) {
+  // return JSON.parse(preprocessorResponse).answer === 'yes' ? 1 : 2;
+  return preprocessorResponse.features.length > 0 ? 'UMSA_false' : 'UMSA_true';
 };
 
 var options = {

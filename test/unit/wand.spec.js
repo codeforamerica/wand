@@ -9,7 +9,16 @@ describe('Wand', function () {
   var goodApiTrigger = [{"callbackFn": "aFunction", "content": "test"}];
   var nestedApiTrigger = [{"callbackFn": "nested.aFunction", "content": "test"}];
 
+  var goodPreTrigger = [{ "callbackFn": "aFunction",
+                          "preprocessor": "bFunction",
+                          "content": "test"}];
+
+  var badPreTrigger = [{ "callbackFn": "aFunction",
+                          "preprocessor": "DOESNOTEXIST",
+                          "content": "test"}];
+
   window.aFunction = function(){};
+  window.bFunction = function(){};
   window.nested = {};
   window.nested.aFunction = function(){};
 
@@ -64,6 +73,16 @@ describe('Wand', function () {
 
     it('should initialize properly even with nested callbacks', function() {
       opts.nodes[0].triggers = nestedApiTrigger;
+      wand.init(opts);
+    });
+
+    it('should initialize with a preprocessor', function() {
+      opts.nodes[0].triggers = goodPreTrigger;
+      wand.init(opts);
+    });
+
+    it('should fail to initialize with a bad preprocessor', function() {
+      opts.nodes[0].triggers = badPreTrigger;
       wand.init(opts);
     });
 
