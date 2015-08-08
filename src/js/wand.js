@@ -22,6 +22,7 @@ var Wand = (function(wand) {
     wand.opts = opts;
     nodes = opts.nodes;
 
+    // TO-DO: refactor this so that all of this is taken care of by a method
     // create sidebar to show history unless the user specifies false
     if (!opts.history) {
       wand.historyElem = wand.util.createElem('aside', 'wand_history_container');

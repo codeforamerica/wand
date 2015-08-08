@@ -5,7 +5,7 @@ html {
 }
 
 // used for theme skins with a default to gray
-@mixin color_cascade($color: #999, $alert-color: red) {
+@mixin color_cascade($color: #999, $alert-color: red, $warning-color: orange) {
   .wand_trigger {
     color: $color;
     border: 2px solid $color;
@@ -17,6 +17,13 @@ html {
       border: 2px solid $alert-color;
       color: $alert-color
     }
+
+    &.warning {
+      background-color: lighten($warning-color, 45%);
+      border: 2px solid $warning-color;
+      color: $warning-color
+    }
+
   }
   .wand_history_node {
     border-color: $color;

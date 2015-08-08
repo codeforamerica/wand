@@ -5,7 +5,7 @@ var Wand = (function(wand) {
   wand = wand || {};
 
   wand.state = {};
-  var _state = [];
+  var _state;
 
   wand.state.getState = function() { return _state; };
   wand.state.getCurrentNode = function() { return _state[_state.length - 1]; };
@@ -29,11 +29,22 @@ var Wand = (function(wand) {
   };
 
   function getStateFromUrl() {
-    var _loadState = decodeState(getParameterByName('wandState'));
-    if (_loadState === '') {
+    _state = decodeState(getParameterByName('wandState'));
+
+    // debugger;
+
+    if (wand.state.getState() === '') {
       return Wand.opts.nodes[0].id;
     }
-    _state = _loadState;
+    if (!wand.util.getNodeObject(wand.state.getCurrentNode())) {
+      wand.notifications.add({
+        text: 'Invalid wand state. Directing you to the beginning instead.',
+        time: 3500,
+        type: 'warning'
+      });
+      resetState();
+      return Wand.opts.nodes[0].id;
+    }
     return wand.state.getCurrentNode();
   }
 
