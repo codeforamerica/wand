@@ -69,6 +69,15 @@ var Wand = (function(wand) {
     }
 
     node.triggers.forEach(function(trigger) {
+
+      // Let's call the (optional) preprocessor
+      if (trigger.preprocessor) {
+        var preprocessorFn = getFuncFromString(trigger.preprocessor);
+        if (preprocessorFn !== null) {
+          trigger.preprocessor = preprocessorFn;
+        }
+      }
+
       var triggerFn = getFuncFromString(trigger.callbackFn);
       if (triggerFn !== null) {
         trigger.callbackFn = triggerFn;
@@ -91,11 +100,11 @@ var Wand = (function(wand) {
 
   }
 
-  /**
-   * Converts a string containing a function or object method name to a function pointer.
-   * @param  string   func
-   * @return function
-   */
+/**
+ * Converts a string containing a function or object method name to a function pointer.
+ * @param {string} func
+ * @return {function}
+ */
   function getFuncFromString(func) {
     // if already a function, return
     if (typeof func === 'function') { return func; }

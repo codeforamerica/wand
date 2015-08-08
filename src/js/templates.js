@@ -13,8 +13,8 @@ var Wand = (function(wand) {
 
     'pickOne': '{{content}}',
 
-    'api': '<input type="text" />' +
-      '<button id="Wand-js-{{_id}}">{{content}}</button>'
+    'api': '<input type="text" id="Wand-input-{{_id}}" />' +
+      '<button type="button" id="Wand-submit-{{_id}}">{{content}}</button>'
 
   };
 
