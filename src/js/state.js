@@ -5,7 +5,7 @@ var Wand = (function(wand) {
   wand = wand || {};
 
   wand.state = {};
-  var _state;
+  var _state = [];
 
   wand.state.getState = function() { return _state; };
   wand.state.getCurrentNode = function() { return _state[_state.length - 1]; };
@@ -23,29 +23,32 @@ var Wand = (function(wand) {
     if (nodeId !== wand.state.getCurrentNode()) {
       _state.push(nodeId);
       history.pushState(
-        wand.state.getState(), '', addUrlParam(document.location.search, "wandState", encodeState(wand.state.getState()))
+        wand.state.getState(), '',
+        addUrlParam(document.location.search, "wandState", encodeState(wand.state.getState()))
       );
     }
   };
 
   function getStateFromUrl() {
-    _state = decodeState(getParameterByName('wandState'));
+    var nodeId;
+    var _loadState = decodeState(getParameterByName('wandState'));
+    _state = _loadState;
 
-    // debugger;
-
-    if (wand.state.getState() === '') {
-      return Wand.opts.nodes[0].id;
-    }
-    if (!wand.util.getNodeObject(wand.state.getCurrentNode())) {
+    if (_loadState === '') {
+      resetState();
+      nodeId = Wand.opts.nodes[0].id;
+    } else if (!wand.util.getNodeObject(wand.state.getCurrentNode())) {
       wand.notifications.add({
         text: 'Invalid wand state. Directing you to the beginning instead.',
         time: 3500,
         type: 'warning'
       });
       resetState();
-      return Wand.opts.nodes[0].id;
+      nodeId = Wand.opts.nodes[0].id;
+    } else {
+      nodeId = wand.state.getCurrentNode();
     }
-    return wand.state.getCurrentNode();
+    return nodeId;
   }
 
   function resetState() {

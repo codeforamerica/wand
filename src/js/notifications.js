@@ -28,14 +28,15 @@ var Wand = (function(wand) {
     var note = document.createElement('div');
     note.className = 'wand-notification ' + options.type;
     note.innerHTML = options.text;
-    wand.notifications.hub.appendChild(note);
 
+    var hub = wand.notifications.hub || buildNotificationShell();
+    hub.appendChild(note);
 
     // TODO: add/remove notifications to an array to interact with them
     // instead of relying on setTimeout() dictating their existence.
     if (params.time > -1) {
       setTimeout(function () {
-          wand.notifications.hub.removeChild( wand.notifications.hub.firstChild );
+          hub.removeChild( wand.notifications.hub.firstChild );
       }, params.time);
     }
 
@@ -45,8 +46,21 @@ var Wand = (function(wand) {
     var el = document.createElement('div');
     el.id = 'wand-notifications-container';
 
-    wand.elem.appendChild(el);
+    var wandElem = wand.elem || document.body;
+    wandElem.appendChild(el);
     return el;
+
+  }
+
+  function buildNotificationShell() {
+    var el = document.createElement('div');
+    el.className = 'wand-container';
+
+    var notificationContainer = buildDomElement();
+    el.appendChild(notificationContainer);
+    document.body.appendChild(el);
+
+    return notificationContainer;
   }
 
   return wand;
