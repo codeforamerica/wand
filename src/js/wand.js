@@ -11,6 +11,10 @@ var Wand = (function(wand) {
     // @params options - object that contains nodes and html container id
     options = opts || {}; // {} if no options, empty object
     if (!opts.elem || !document.getElementById(opts.elem)) {
+      wand.notifications.add({
+        text: 'You did not specify a valid HTML element!',
+        type: 'alert'
+      });
       throw wand.errors.badHtmlError;
     }
 
@@ -49,11 +53,19 @@ var Wand = (function(wand) {
     wand.opts.nodes.forEach(function(node) {
 
       if (hasValidApiCallbackFns(node) === false) {
+        wand.notifications.add({
+          text: 'We could not find a callback function that you asked for!',
+          type: 'alert'
+        });
         throw wand.errors.noSuchCallbackError;
       }
 
       nodeIds = hasUniqueNodeIds(node, nodeIds);
       if (nodeIds === false) {
+        wand.notifications.add({
+          text: 'You have duplicate node ids!',
+          type: 'alert'
+        });
         throw wand.errors.duplicateNodeIdError;
       }
 

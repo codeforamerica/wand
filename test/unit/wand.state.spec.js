@@ -37,6 +37,15 @@ describe('Wand State', function() {
     expect(Wand.state.getState()).to.deep.equal([0, 1]);
   });
 
+  it('should redirect you to the first node if there is an unfound node', function() {
+    window.history.pushState(
+      [0,1], "", addUrlParam(document.location.search, "wandState", [0,100])
+    );
+    wand = Wand;
+    wand.init(opts);
+    expect(Wand.state.getState()).to.deep.equal([0]);
+  });
+
   describe('From starting node', function() {
 
     beforeEach(function() {
