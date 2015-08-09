@@ -115,7 +115,6 @@ var Wand = (function(wand, Handlebars) {
 
       // if we can't, throw an error and reset the wand to the beginning
       // see https://github.com/codeforamerica/wand/issues/43 for more info
-      console.log(node, answerHTML);
       if (answerHTML.length === 0) {
         wand.notifications.add({
           text: 'Impossible wand state history. Directing you to the beginning instead.',
@@ -123,8 +122,8 @@ var Wand = (function(wand, Handlebars) {
           type: 'warning'
         });
         // wand.engine.renderNode(wand.state.init());
-        wand.state.reset();
-        // wand.engine.renderNode(Wand.opts.nodes[0].id);
+        wand.state.resetState();
+        wand.engine.renderNode(Wand.opts.nodes[0].id);
 
       // if we can, create and append the element
       } else {

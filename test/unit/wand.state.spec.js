@@ -39,7 +39,16 @@ describe('Wand State', function() {
 
   it('should redirect you to the first node if there is an unfound node', function() {
     window.history.pushState(
-      [0,1], "", addUrlParam(document.location.search, "wandState", [0,100])
+      [0,100], "", addUrlParam(document.location.search, "wandState", [0,100])
+    );
+    wand = Wand;
+    wand.init(opts);
+    expect(Wand.state.getState()).to.deep.equal([0]);
+  });
+
+  it('should redirect you to the first node if the history makes no sense', function() {
+    window.history.pushState(
+      [0,1,2], '', addUrlParam(document.location.search, "wandState", [0,1,2])
     );
     wand = Wand;
     wand.init(opts);

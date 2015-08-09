@@ -11,14 +11,13 @@ var Wand = (function(wand) {
   wand.state.getCurrentNode = function() { return _state[_state.length - 1]; };
 
   wand.state.init = function() {
-    resetState();
+    wand.state.resetState();
     return getStateFromUrl();
   };
 
-  wand.state.reset = function() {
-    resetState();
-    wand.engine.renderNode(0);
-  }
+  wand.state.resetState = function() {
+    _state = [];
+  };
 
   wand.state.previousNode = function() {
     return getStateFromUrl();
@@ -40,7 +39,7 @@ var Wand = (function(wand) {
     _state = _loadState;
 
     if (_loadState === '') {
-      resetState();
+      wand.state.resetState();
       nodeId = Wand.opts.nodes[0].id;
     } else if (!wand.util.getNodeObject(wand.state.getCurrentNode())) {
       wand.notifications.add({
@@ -48,16 +47,12 @@ var Wand = (function(wand) {
         time: 3500,
         type: 'warning'
       });
-      resetState();
+      wand.state.resetState();
       nodeId = Wand.opts.nodes[0].id;
     } else {
       nodeId = wand.state.getCurrentNode();
     }
     return nodeId;
-  }
-
-  function resetState() {
-    _state = [];
   }
 
   function getParameterByName(name) {
