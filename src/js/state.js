@@ -15,6 +15,11 @@ var Wand = (function(wand) {
     return getStateFromUrl();
   };
 
+  wand.state.reset = function() {
+    resetState();
+    wand.engine.renderNode(0);
+  }
+
   wand.state.previousNode = function() {
     return getStateFromUrl();
   };

@@ -104,20 +104,42 @@ var Wand = (function(wand, Handlebars) {
     for (var s = 0; s < stateArray.length - 1; s++) {
       var node = wand.util.getNodeObject(stateArray[s]); // get node that matches state
       var nextNodeId = stateArray[s + 1]; // get the next nodeId in the state array for finding user response
-      var historyNodeElem = wand.util.createElem('li', 'wand_history_node');
 
-      // append the history title/question
-      historyNodeElem.innerHTML = '<span class="wand_history_title">'+node.title+'</span>';
-
-      // find the user's given answer by checking the trigger targets
+      var answerHTML = "";
+      // check to make sure we can get all of the information first
       for (var t = 0; t < node.triggers.length; t++) {
         if (nextNodeId == node.triggers[t].target) {
-          historyNodeElem.innerHTML += '<span class="wand_history_answer">'+node.triggers[t].content+'</strong>';
+          answerHTML = '<span class="wand_history_answer">'+node.triggers[t].content+'</strong>';
         }
       }
 
-      // append the wand history element
-      historyList.appendChild(historyNodeElem);
+      // if we can't, throw an error and reset the wand to the beginning
+      // see https://github.com/codeforamerica/wand/issues/43 for more info
+      console.log(node, answerHTML);
+      if (answerHTML.length === 0) {
+        wand.notifications.add({
+          text: 'Impossible wand state history. Directing you to the beginning instead.',
+          time: 3500,
+          type: 'warning'
+        });
+        // wand.engine.renderNode(wand.state.init());
+        wand.state.reset();
+        // wand.engine.renderNode(Wand.opts.nodes[0].id);
+
+      // if we can, create and append the element
+      } else {
+        var historyNodeElem = wand.util.createElem('li', 'wand_history_node');
+
+        // append the history title/question
+        historyNodeElem.innerHTML = '<span class="wand_history_title">'+node.title+'</span>';
+        historyNodeElem.innerHTML += answerHTML;
+
+        // TODO: add click event to history element
+
+        // append the wand history element
+        historyList.appendChild(historyNodeElem);
+      }
+
     }
     wand.historyElem.appendChild(historyList);
   }

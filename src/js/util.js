@@ -71,7 +71,12 @@ var Wand = (function(wand) {
     return xhr;
   }
 
-  // creates a DOM node with specified classNames and id
+/**
+ * creates a DOM node with specified classNames and innerHTML.
+ * @param {string} type - HTML tag type
+ * @param {string} className
+ * @param {string} innerHTML
+ */
   wand.util.createElem = function(type, className, innerHTML) {
     var elem = document.createElement(type);
     if (className) {
