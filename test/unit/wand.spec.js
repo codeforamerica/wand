@@ -10,11 +10,9 @@ describe('Wand', function () {
   var nestedApiTrigger = [{"callbackFn": "nested.aFunction", "content": "test"}];
 
   var goodPreTrigger = [{ "callbackFn": "aFunction",
-                          "preprocessor": "bFunction",
                           "content": "test"}];
 
   var badPreTrigger = [{ "callbackFn": "aFunction",
-                          "preprocessor": "DOESNOTEXIST",
                           "content": "test"}];
 
   window.aFunction = function(){};
@@ -67,7 +65,7 @@ describe('Wand', function () {
   describe('Wand API Node', function() {
 
     beforeEach(function() {
-      opts.nodes[0].type = 'api';
+      opts.nodes[0].type = 'custom';
     });
 
     it('should fail to initialize if it cannot find a function in the callbackFns', function() {
