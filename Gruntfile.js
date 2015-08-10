@@ -48,12 +48,13 @@ module.exports = function (grunt) {
         ],
         basePath: '.',
         colors: true,
-        frameworks: ['mocha', 'chai'],
+        frameworks: ['mocha', 'chai', 'sinon'],
         plugins: [
           'karma-chai',
           'karma-mocha',
           'karma-phantomjs-launcher',
-          'karma-spec-reporter'
+          'karma-spec-reporter',
+          'karma-sinon'
         ],
         browsers: ['PhantomJS']
       },
@@ -85,7 +86,8 @@ module.exports = function (grunt) {
 
     concat: {
       options: {
-        separator: ';'
+        separator: ';',
+        sourceMap: true
       },
       dev: {
         src: [
@@ -93,7 +95,7 @@ module.exports = function (grunt) {
           '<%=handlebars%>/handlebars.js',
           '<%=srcJs%>'
         ],
-        dest: '<%=buildDir%>/wand.js'
+        dest: '<%=buildDir%>/wand.js',
       },
     },
 
@@ -101,7 +103,6 @@ module.exports = function (grunt) {
       js: {
         files: ['<%=srcJs%>'],
         tasks: [
-          'clean:dist',
           'concat:dev'
         ],
         options: {
@@ -111,7 +112,6 @@ module.exports = function (grunt) {
       sass: {
         files: ['<%=srcSass%>'],
         tasks: [
-          'clean:dist',
           'concat:dev',
           'sass'
         ],
@@ -122,7 +122,6 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js'],
         tasks: [
-          'clean:dist',
           'concat:dev'
         ]
       }

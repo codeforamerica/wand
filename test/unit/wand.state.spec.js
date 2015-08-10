@@ -2,15 +2,16 @@ describe('Wand State', function() {
 
   var _elem, wand;
   var expect = chai.expect;
-  var elemId = 'testDiv';
+  var elemId = 'stateSpecDiv';
   var opts = {
     elem: elemId,
     nodes: [{
       "id": 0, "title": "First Node", "type": "pickOne",
-      "triggers": [{ "target": 1, "content": "test" }]
+      "triggers": [{ "target": 1, "content": "test" }],
     }, {
-      "id": 1, "title": "Second Node", "type": "pickOne"
-    }]
+      "id": 1, "title": "Second Node", "type": "pickOne", 'triggers': [],
+    }],
+    callbackFns: []
   };
 
   beforeEach(function() {
@@ -21,6 +22,10 @@ describe('Wand State', function() {
 
   afterEach(function() {
     window.history.pushState(null, null, '/');
+    var node = document.getElementById(elemId);
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
   });
 
   it('should check for wandState queryString and set history appropriately', function() {
@@ -30,6 +35,15 @@ describe('Wand State', function() {
     wand = Wand;
     wand.init(opts);
     expect(Wand.state.getState()).to.deep.equal([0, 1]);
+  });
+
+  it('should redirect you to the first node if there is an unfound node', function() {
+    window.history.pushState(
+      [0,1], "", addUrlParam(document.location.search, "wandState", [0,100])
+    );
+    wand = Wand;
+    wand.init(opts);
+    expect(Wand.state.getState()).to.deep.equal([0]);
   });
 
   describe('From starting node', function() {
@@ -92,7 +106,5 @@ describe('Wand State', function() {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
       results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-  }
-
-
+  };
 });

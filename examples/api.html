@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="../dist/main.css"/>
+
+</head>
+<body>
+<div id="wizard"></div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzCsQTTBA7AbrjxE6R5vwnZkL0q7Ev48Q"></script>
+<script src="../dist/wand.js"></script>
+<script>
+function ajaxCallback(data){
+  var nodeId = data.features.length > 0 ? 'UMSA_false' : 'UMSA_true';
+  Wand.engine.renderNode(nodeId);
+};
+
+function amIInMiami(address) {
+  var geocoder = new google.maps.Geocoder();
+
+  geocoder.geocode(
+    {
+      "address": address,
+      "componentRestrictions": { "administrativeArea" : "Miami-Dade County" }
+    },
+    function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var lat = results[0].geometry.location.lat();
+        var lng = results[0].geometry.location.lng();
+        $.ajax({
+          url: "http://still-eyrie-4551.herokuapp.com/areas",
+          data: { lat: lat, lon: lng },
+          dataType: "jsonp",
+          method: "POST",
+        }).done(ajaxCallback);
+      } else {
+          alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+}
+
+
+var options = {
+  "elem": "wizard",
+  "nodes": [
+  {
+    "id":0,
+    "title": "The county check!",
+    "content": "Enter your address in Miami:",
+    "type": "custom",
+    "triggers": [
+      {
+        "content": "submit",
+        "callbackFn": "amIInMiami",
+      }
+    ]
+  },
+  {
+    "id": "UMSA_false",
+    "title": "YES!",
+    "content": "You are in a municipality in Miami-Dade.",
+    "type": "pickOne",
+    "triggers": []
+  },
+  {
+    "id": "UMSA_true",
+    "title": "NO!",
+    "content": "You are in Unincorporated Miami-Dade County!",
+    "type": "pickOne",
+    "triggers": []
+  }]
+};
+
+Wand.init(options);
+
+</script>
+
+</body>
+</html>
