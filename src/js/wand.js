@@ -29,10 +29,10 @@ var Wand = (function(wand) {
     // TO-DO: refactor this so that all of this is taken care of by a method
     // create sidebar to show history unless the user specifies false
     if (!opts.history) {
-      wand.historyElem = wand.util.createElem('aside', 'wand_history_container');
+      wand.historyElem = wand.util.createElem('aside', 'wand-history-container');
       wand.elem.appendChild(wand.historyElem);
     }
-    wand.nodeContainer = wand.util.createElem('div', 'wand_node_container');
+    wand.nodeContainer = wand.util.createElem('div', 'wand-node-container');
     wand.elem.appendChild(wand.nodeContainer);
 
 

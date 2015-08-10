@@ -1,4 +1,3 @@
-
 describe('Wand notifications', function () {
 
   var _elem, wand, opts, notificationAddSpy;

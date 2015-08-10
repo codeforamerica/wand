@@ -32,11 +32,14 @@ var Wand = (function(wand) {
     var hub = wand.notifications.hub || buildNotificationShell();
     hub.appendChild(note);
 
+    wand.notifications.hub.appendChild(note);
+
     // TODO: add/remove notifications to an array to interact with them
     // instead of relying on setTimeout() dictating their existence.
     if (params.time > -1) {
       setTimeout(function () {
           hub.removeChild( wand.notifications.hub.firstChild );
+          wand.notifications.hub.removeChild( wand.notifications.hub.firstChild );
       }, params.time);
     }
 

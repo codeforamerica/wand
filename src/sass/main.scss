@@ -4,9 +4,13 @@ html {
   font-family: sans-serif;
 }
 
+$color-red: #FF4136;
+$color-orange: #FF851B;
+$color-gray: #999;
+
 // used for theme skins with a default to gray
-@mixin color_cascade($color: #999, $alert-color: red, $warning-color: orange) {
-  .wand_trigger {
+@mixin color_cascade($color: #999, $alert-color: $color-red, $warning-color: $color-orange) {
+  .wand-trigger {
     color: $color;
     border: 2px solid $color;
 
@@ -25,21 +29,21 @@ html {
     }
 
   }
-  .wand_history_node {
+  .wand-history-node {
     border-color: $color;
     &:before {
       background-color: white;
       border: 0.2em solid $color;
     }
   }
-  .wand_node_container {
+  .wand-node-container {
     border-color: $color;
     &:before {
       background-color: $color;
       border: 0.2em solid $color;
     }
   }
-  .wand_history_title {
+  .wand-history-title {
     color: $color;
   }
 }
@@ -55,12 +59,10 @@ html {
     @include color_cascade(brick-red);
   }
 
-  .wand_node {}
-  .wand_node_container {
-    border-left-width: 0.2em;
-    border-left-style: solid;
-    padding: 0.2em 1em 1em;
-    margin-left: 1em;
+  .wand-node {}
+  .wand-node-container {
+    padding: 0.2em 1em 1em 1.2em;
+    margin-left: 1.2em;
     position: relative;
     &:before {
       content: " ";
@@ -71,26 +73,17 @@ html {
       height: 0.55em;
       border-radius: 100%;
     }
-    &:after {
-      position: absolute;
-      content: " ";
-      bottom: 0;
-      left: -0.55em;
-      width: 0.9em;
-      height: 0.2em;
-      background: steelblue;
-    }
   }
-  .wand_node_title {
+  .wand-node-title {
     font-size: 1.5em;
     margin: -0.4em 0 0.5em;
   }
-  .wand_node_content {
+  .wand-node-content {
     margin: 0;
   }
 
   .wand-notification,
-  .wand_trigger {
+  .wand-trigger {
     text-transform:uppercase;
     padding: 1em 2em;
     font-size: 0.7em;
@@ -102,16 +95,16 @@ html {
   }
 
 
-  .wand_history_container {
+  .wand-history-container {
     width: 400px; // temporary
     margin: 0;
   }
-  .wand_history {
+  .wand-history {
     list-style-type: none;
     margin: 0;
     padding: 1em 1em 0;
   }
-  .wand_history_node {
+  .wand-history-node {
     position: relative;
     padding: 0 0 20px 1em;
     border-left-width: 0.2em;
@@ -129,8 +122,8 @@ html {
       padding-bottom: 3em;
     }
   }
-  .wand_history_title {}
-  .wand_history_answer {
+  .wand-history-title {}
+  .wand-history-answer {
     font-size: 0.9em;
     display: block;
     font-weight: 900;

@@ -1,7 +1,7 @@
 
 describe('Wand', function () {
 
-  var _elem, wand, opts, notificationAddSpy;
+  var _elem, wand, opts, notificationsSpy;
   var expect = chai.expect;
   var elemId = 'wandSpecDiv';
   var nodes = [{"id": 0, 'type': 'pickOne', 'title': "node 0 title", "content": "foo", "triggers": []}];
