@@ -45,7 +45,7 @@ var Wand = (function(wand, Handlebars) {
  * Renders the triggers, event handlers and performs necessary business logic.
  * @param {object} trigger - The trigger object.
  * @param {string} id - The id of the trigger node.
- * @param {string} type - Renders a specific trigger type (pickOne, api, etc.)
+ * @param {string} type - Renders a specific trigger type (pickOne, custom, etc.)
  */
   function renderTrigger(trigger, id, type) {
     trigger._id = id;
@@ -63,7 +63,7 @@ var Wand = (function(wand, Handlebars) {
 
         break;
 
-      case 'api':
+      case 'custom':
         var params = '';
         var elem = document.createElement('div');
         elem.id = 'wand-trigger-' + trigger._id;
@@ -71,27 +71,8 @@ var Wand = (function(wand, Handlebars) {
         var submitButton = elem.querySelector('#Wand-submit-' + trigger._id);
 
         submitButton.onclick = function(event) {
-          var response;
-          var inputData = elem.querySelector('#Wand-input-' + trigger._id);
-
-          if (trigger.preprocessor) {
-            params = wand.util.encodeParams(trigger.preprocessor(inputData.value));
-          }
-
-          if (trigger.jsonp === true) {
-            response = wand.util.loadJsonp(trigger.api, params, function(data) {
-              wand.engine.renderNode(trigger.callbackFn(data));
-            });
-          } else {
-            response = wand.util.loadXhr(trigger, params, function(xhr) {
-              if (xhr.status === 200) {
-                wand.engine.renderNode(trigger.callbackFn(xhr.response));
-              } else {
-                console.error('The XHR response returned an error!');
-              }
-            });
-          }
-
+          var inputElem = elem.querySelector('#Wand-input-' + trigger._id);
+          trigger.callbackFn(inputElem.value);
         };
 
         wand.nodeContainer.appendChild(elem);

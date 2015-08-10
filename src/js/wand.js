@@ -64,7 +64,7 @@ var Wand = (function(wand) {
 
   function hasValidApiCallbackFns(node) {
     var validCallbackFns = true;
-    if (node.type !== 'api') {
+    if (node.type !== 'custom') {
       return;
     }
 

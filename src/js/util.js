@@ -33,25 +33,6 @@ var Wand = (function(wand) {
   };
 
 /**
- * For APIs that have Cross-origin resource sharing issues, bring in a method for JSONP.
- * @param {string} url
- * @param {string} params
- * @param {function} callback
- */
-  wand.util.loadJsonp = function(url, params, callback) {
-    var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
-    window[callbackName] = function(data) {
-      delete window[callbackName];
-      document.body.removeChild(script);
-      callback(data);
-    };
-
-    var script = document.createElement('script');
-    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + params + '&callback=' + callbackName;
-    document.body.appendChild(script);
-  };
-
-/**
  * Handles XMLHttpRequests, similar to jQuery's .ajax method.
  * @param {string} url
  * @param {string} params

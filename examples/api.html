@@ -12,12 +12,12 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzCsQTTBA7AbrjxE6R5vwnZkL0q7Ev48Q"></script>
 <script src="../dist/wand.js"></script>
 <script>
+function ajaxCallback(data){
+  var nodeId = data.features.length > 0 ? 'UMSA_false' : 'UMSA_true';
+  Wand.engine.renderNode(nodeId);
+};
 
-var nested = {};
-nested.preprocessor = function(address) {
-  // Preprocessors are optional. The return value of the preprocessor function
-  // would be fed as parameters into the functional callback (callbackFn).
-  /*
+function amIInMiami(address) {
   var geocoder = new google.maps.Geocoder();
 
   geocoder.geocode(
@@ -27,23 +27,20 @@ nested.preprocessor = function(address) {
     },
     function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        lat = results[0].geometry.location.A;
-        lng = results[0].geometry.location.F;
-        return { lat: lat, lon: lng }
+        var lat = results[0].geometry.location.lat();
+        var lng = results[0].geometry.location.lng();
+        $.ajax({
+          url: "http://still-eyrie-4551.herokuapp.com/areas",
+          data: { lat: lat, lon: lng },
+          dataType: "jsonp",
+          method: "POST",
+        }).done(ajaxCallback);
       } else {
           alert("Geocode was not successful for the following reason: " + status);
       }
     });
+}
 
-  return address;
-  */
-  return { lat: 25.840171, lon: -8.179727 };
-};
-
-nested.handleYesNoApi = function(preprocessorResponse) {
-  // return JSON.parse(preprocessorResponse).answer === 'yes' ? 1 : 2;
-  return preprocessorResponse.features.length > 0 ? 'UMSA_false' : 'UMSA_true';
-};
 
 var options = {
   "elem": "wizard",
@@ -52,14 +49,11 @@ var options = {
     "id":0,
     "title": "The county check!",
     "content": "Enter your address in Miami:",
-    "type": "api",
+    "type": "custom",
     "triggers": [
       {
         "content": "submit",
-        "api": "http://still-eyrie-4551.herokuapp.com/areas",
-        "preprocessor": "nested.preprocessor",
-        "callbackFn": "nested.handleYesNoApi",
-        "jsonp": true
+        "callbackFn": "amIInMiami",
       }
     ]
   },
