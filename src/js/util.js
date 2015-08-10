@@ -64,7 +64,11 @@ var Wand = (function(wand) {
     return elem;
   };
 
-  // will get a node object by ID
+/**
+ * Renders the node given the id.
+ * @param {string} nodeId - The id of the trigger node.
+ * @returns {object} The node of the wizard
+ */
   wand.util.getNodeObject = function(nodeId) {
     for (var n = 0; n < wand.opts.nodes.length; n++) {
       if (nodeId === wand.opts.nodes[n].id) {
@@ -72,7 +76,6 @@ var Wand = (function(wand) {
       }
     }
   };
-
 
   return wand;
 

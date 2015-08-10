@@ -6,7 +6,7 @@ var Wand = (function(wand, Handlebars) {
   wand.engine = {};
 
 /**
- * Renders the node given the id.
+ * Gets the node given the id.
  * @param {string} nodeId - The id of the trigger node.
  * @returns {object} The node of the wizard
  */
@@ -16,7 +16,6 @@ var Wand = (function(wand, Handlebars) {
         return wand.opts.nodes[i];
       }
     }
-    console.error('Node does not exist:', nodeId);
     return;
   }
 
@@ -25,9 +24,13 @@ var Wand = (function(wand, Handlebars) {
  * @param {string} nodeId - The id of the trigger node.
  */
   wand.engine.renderNode = function(nodeId) {
-    var node = getNode(nodeId);
+    var node = wand.util.getNodeObject(nodeId);
     if (!node) {
-      throw new Error('redundant unfound node error');
+      wand.notifications.add({
+        text: 'Node does not exist: ' + nodeId,
+        type: 'alert'
+      });
+      throw wand.errors.nodeDoesNotExistError;
     }
     // push node into State array
     wand.state.addToState(nodeId);
@@ -54,7 +57,7 @@ var Wand = (function(wand, Handlebars) {
     switch (type) {
 
       case 'pickOne':
-        var button = wand.util.createElem('button', 'wand_trigger', triggerHtml);
+        var button = wand.util.createElem('button', 'wand-trigger', triggerHtml);
         button.onclick = function(event) {
           wand.engine.renderNode(trigger.target);
         };
@@ -85,19 +88,19 @@ var Wand = (function(wand, Handlebars) {
   // redraws every time a node renders using the state array
   function renderHistory(stateArray) {
     wand.historyElem.innerHTML = ""; // clear history
-    var historyList = wand.util.createElem('ol', 'wand_history');
+    var historyList = wand.util.createElem('ol', 'wand-history');
     for (var s = 0; s < stateArray.length - 1; s++) {
       var node = wand.util.getNodeObject(stateArray[s]); // get node that matches state
       var nextNodeId = stateArray[s + 1]; // get the next nodeId in the state array for finding user response
-      var historyNodeElem = wand.util.createElem('li', 'wand_history_node');
-      
+      var historyNodeElem = wand.util.createElem('li', 'wand-history-node');
+
       // append the history title/question
-      historyNodeElem.innerHTML = '<span class="wand_history_title">'+node.title+'</span>';
+      historyNodeElem.innerHTML = '<span class="wand-history-title">'+node.title+'</span>';
 
       // find the user's given answer by checking the trigger targets
       for (var t = 0; t < node.triggers.length; t++) {
         if (nextNodeId == node.triggers[t].target) {
-          historyNodeElem.innerHTML += '<span class="wand_history_answer">'+node.triggers[t].content+'</strong>';
+          historyNodeElem.innerHTML += '<span class="wand-history-answer">'+node.triggers[t].content+'</strong>';
         }
       }
 

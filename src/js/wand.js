@@ -6,30 +6,33 @@ var Wand = (function(wand) {
 
   var options, nodes;
 
-  var badHtmlError = new Error('You did not pass a valid HTML Element');
-  var noSuchCallbackError = new Error('We could not find a callback function with that name!');
-  var duplicateNodeIdError = new Error('Your nodes contain duplicate IDs.');
-
   wand.init = function(opts) {
+
     // @params options - object that contains nodes and html container id
     options = opts || {}; // {} if no options, empty object
     if (!opts.elem || !document.getElementById(opts.elem)) {
-      throw badHtmlError;
+      wand.notifications.add({
+        text: 'You did not specify a valid HTML element!',
+        type: 'alert'
+      });
+      throw wand.errors.badHtmlError;
     }
 
-    wand.opts = opts;
-
-
-    nodes = opts.nodes;
     wand.elem = document.getElementById(opts.elem);
     wand.elem.className += ' wand-container';
 
+    wand.notifications.init();
+
+    wand.opts = opts;
+    nodes = opts.nodes;
+
+    // TO-DO: refactor this so that all of this is taken care of by a method
     // create sidebar to show history unless the user specifies false
     if (!opts.history) {
-      wand.historyElem = wand.util.createElem('aside', 'wand_history_container');
+      wand.historyElem = wand.util.createElem('aside', 'wand-history-container');
       wand.elem.appendChild(wand.historyElem);
     }
-    wand.nodeContainer = wand.util.createElem('div', 'wand_node_container');
+    wand.nodeContainer = wand.util.createElem('div', 'wand-node-container');
     wand.elem.appendChild(wand.nodeContainer);
 
 
@@ -50,12 +53,20 @@ var Wand = (function(wand) {
     wand.opts.nodes.forEach(function(node) {
 
       if (hasValidApiCallbackFns(node) === false) {
-        throw noSuchCallbackError;
+        wand.notifications.add({
+          text: 'We could not find a callback function that you asked for!',
+          type: 'alert'
+        });
+        throw wand.errors.noSuchCallbackError;
       }
 
       nodeIds = hasUniqueNodeIds(node, nodeIds);
       if (nodeIds === false) {
-        throw duplicateNodeIdError;
+        wand.notifications.add({
+          text: 'You have duplicate node ids!',
+          type: 'alert'
+        });
+        throw wand.errors.duplicateNodeIdError;
       }
 
     });

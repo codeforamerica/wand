@@ -48,12 +48,13 @@ module.exports = function (grunt) {
         ],
         basePath: '.',
         colors: true,
-        frameworks: ['mocha', 'chai'],
+        frameworks: ['mocha', 'chai', 'sinon'],
         plugins: [
           'karma-chai',
           'karma-mocha',
           'karma-phantomjs-launcher',
-          'karma-spec-reporter'
+          'karma-spec-reporter',
+          'karma-sinon'
         ],
         browsers: ['PhantomJS']
       },
