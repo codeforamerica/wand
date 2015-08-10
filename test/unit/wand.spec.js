@@ -85,16 +85,6 @@ describe('Wand', function () {
       wand.init(opts);
     });
 
-    it('should initialize with a preprocessor', function() {
-      opts.nodes[0].triggers = goodPreTrigger;
-      wand.init(opts);
-    });
-
-    it('should fail to initialize with a bad preprocessor', function() {
-      opts.nodes[0].triggers = badPreTrigger;
-      wand.init(opts);
-    });
-
   });
 
 });
